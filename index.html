@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>San Juan River Watershed Project Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div>
+          <h1>San Juan River Watershed Project Builder</h1>
+          <p class="subtitle">
+            Practical guide for moving from project idea to implementation in
+            the Utah portion of the San Juan River Watershed.
+          </p>
+        </div>
+        <div class="header-badge">
+          <span>Living document</span>
+          <span class="dot">•</span>
+          <span>Review annually with Tribal leadership</span>
+        </div>
+      </header>
+
+      <main class="layout">
+        <div class="layout-main">
+          <div class="panel">
+            <h2>Project setup</h2>
+            <p class="subtitle">
+              Fill this out once at the beginning. The builder will generate a
+              pathway based on your project type and context.
+            </p>
+
+            <form id="project-form" class="project-form">
+              <div class="field">
+                <label for="projectName">
+                  Project name
+                  <span class="required">*</span>
+                </label>
+                <input
+                  id="projectName"
+                  name="projectName"
+                  type="text"
+                  placeholder="Example: Oljato livestock water and riparian restoration"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="communityChapter">
+                  Community / Chapter
+                  <span class="required">*</span>
+                </label>
+                <input
+                  id="communityChapter"
+                  name="communityChapter"
+                  type="text"
+                  placeholder="Example: Aneth, Oljato, Navajo Mountain, White Mesa, Blanding"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="projectTypeId">
+                  Project type
+                  <span class="required">*</span>
+                </label>
+                <select id="projectTypeId" name="projectTypeId" required>
+                  <option value="">Select…</option>
+                  <!-- Populated by script.js -->
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="jurisdictionPattern">
+                  Jurisdiction pattern
+                </label>
+                <textarea
+                  id="jurisdictionPattern"
+                  name="jurisdictionPattern"
+                  rows="3"
+                  placeholder="Example: Chapter + Navajo Nation + San Juan County + BLM"
+                ></textarea>
+              </div>
+
+              <div class="field">
+                <label for="urgency">
+                  Urgency
+                  <span class="required">*</span>
+                </label>
+                <select id="urgency" name="urgency" required>
+                  <option value="">Select…</option>
+                  <option>Emergency – life/health safety</option>
+                  <option>High – critical infrastructure or acute damage</option>
+                  <option>Medium – important but not life safety</option>
+                  <option>Low – planning or long-term opportunity</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="currentStage">
+                  Current stage
+                  <span class="required">*</span>
+                </label>
+                <select id="currentStage" name="currentStage" required>
+                  <option value="">Select…</option>
+                  <option>Idea only</option>
+                  <option>Concept documented</option>
+                  <option>Contacts started</option>
+                  <option>Design / planning underway</option>
+                  <option>Funding applications in progress</option>
+                  <option>Implementation / construction</option>
+                  <option>Monitoring / follow-up</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="needDescription">
+                  Need or issue description
+                  <span class="required">*</span>
+                </label>
+                <textarea
+                  id="needDescription"
+                  name="needDescription"
+                  rows="4"
+                  placeholder="Briefly describe what is happening, who is affected, and what a successful project would change."
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-footer">
+                <span id="form-status" class="form-status">
+                  Required fields marked with *
+                </span>
+                <div class="form-actions">
+                  <button type="button" id="clear-form">Clear form</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div id="project-summary" class="panel muted">
+            Select a project type to see the recommended pathway.
+          </div>
+
+          <div class="panel">
+            <h2>Cross-cutting coordination sequence</h2>
+            <p class="subtitle">
+              These steps generally apply across most projects in the Utah
+              portion of the San Juan River Watershed.
+            </p>
+            <ol id="coordination-sequence"></ol>
+          </div>
+
+          <div class="panel">
+            <h2>Project pathway matrix</h2>
+            <p class="subtitle">
+              Quick view of first calls, second calls, third calls, and top
+              funding combinations by project type.
+            </p>
+            <div class="table-wrapper">
+              <table class="matrix-table" id="matrix-table">
+                <thead>
+                  <tr>
+                    <th>Project type</th>
+                    <th>First call</th>
+                    <th>Second call</th>
+                    <th>Third call</th>
+                    <th>Top funding combinations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Populated by script.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <aside class="layout-sidebar">
+          <div class="panel sidebar-panel">
+            <h2>Project types</h2>
+            <p class="subtitle">
+              Choose the pathway that best matches your issue or opportunity.
+            </p>
+            <ul class="type-list" id="type-list">
+              <!-- Populated by script.js -->
+            </ul>
+          </div>
+
+          <div class="panel sidebar-panel">
+            <h2>How to use this tool</h2>
+            <ul class="help-list">
+              <li>
+                Start by entering the project name, Chapter, and a short
+                description of the issue or opportunity.
+              </li>
+              <li>
+                Select the project type that best fits the situation (you can
+                change it later if needed).
+              </li>
+              <li>
+                Review the generated pathway: who to call first, which entities
+                to bring in next, and likely funding combinations.
+              </li>
+              <li>
+                Use the cross-cutting sequence to align Tribal, county, state,
+                and federal coordination in the right order.
+              </li>
+              <li>
+                Treat this as a starting framework, not a substitute for legal
+                review, Tribal approval, or agency consultation.
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Built from the Lower San Juan River Watershed Project Builder process
+          and project-type pathways for Tribal, local, state, and federal
+          coordination.
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
