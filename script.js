@@ -341,13 +341,11 @@ const PROJECT_TYPES = [
     }
   }
 ];
-
 const COORDINATION_SEQUENCE = [
   "Start with tribal and chapter leadership when the issue is on tribal land, affects tribal members, or requires consultation with Navajo Nation or Ute Mountain Ute authorities.",
   "Bring in tribal technical programs early so the project is in the correct department(s) and internal approval processes.",
   "Use the Navajo Utah Commission as a Utah-facing coordination bridge for projects crossing tribal, state, and county systems.",
-  "Engage county and state entities after local and tribal alignment is established, unless an
-  emergency requires immediate public health or safety intervention.",
+  "Engage county and state entities after local and tribal alignment is established, unless an emergency requires immediate public health or safety intervention.",
   "Bring in federal agencies once the project concept, affected geography, and likely jurisdictional triggers are understood.",
   "Layer funding conversations after the basic project pathway is clear so agencies and funders are asked to support a defined project rather than a general concern."
 ];
