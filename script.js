@@ -551,7 +551,6 @@ function attachEventHandlers() {
     }
   });
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   renderProjectTypes();
   renderCoordinationSequence();
