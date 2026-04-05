@@ -1,0 +1,322 @@
+:root {
+  --bg: #f4f5f7;
+  --bg-panel: #ffffff;
+  --border: #dde1e7;
+  --accent: #0d6b5f;
+  --accent-soft: #e0f2ef;
+  --text: #14213d;
+  --muted: #6b7280;
+  --danger: #b91c1c;
+  --radius-panel: 12px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.header h1 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+  letter-spacing: 0.01em;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--accent-soft);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.header-badge .dot {
+  font-size: 0.9rem;
+}
+
+/* Layout */
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(260px, 0.9fr);
+  gap: 16px;
+}
+
+.layout-main,
+.layout-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Panels */
+
+.panel {
+  background: var(--bg-panel);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-soft);
+  padding: 18px 18px 20px;
+}
+
+.panel h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.panel h3 {
+  margin: 16px 0 6px;
+  font-size: 0.98rem;
+}
+
+.panel h4 {
+  margin: 8px 0 4px;
+  font-size: 0.9rem;
+}
+
+/* Form */
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.required {
+  color: var(--danger);
+  margin-left: 4px;
+}
+
+input[type="text"],
+textarea,
+select {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 7px 9px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: #ffffff;
+}
+
+input[type="text"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(13, 107, 95, 0.15);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+.form-status {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  font-family: inherit;
+}
+
+button[type="button"] {
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  background: #f9fafb;
+  cursor: pointer;
+  color: var(--text);
+  transition: background 0.15s ease, border-color 0.15s ease,
+    transform 0.05s ease;
+}
+
+button[type="button"]:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+button[type="button"]:active {
+  transform: translateY(1px);
+}
+
+/* Sidebar */
+
+.sidebar-panel {
+  position: sticky;
+  top: 16px;
+}
+
+.type-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.type-pill {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.type-pill--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+.help-list {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.help-list li + li {
+  margin-top: 4px;
+}
+
+/* Two-column layout */
+
+.two-col {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+/* Matrix table */
+
+.table-wrapper {
+  overflow-x: auto;
+  margin-top: 6px;
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.matrix-table th,
+.matrix-table td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  vertical-align: top;
+  text-align: left;
+}
+
+.matrix-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+/* Muted panel */
+
+.muted {
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Footer */
+
+.footer {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Responsive */
+
+@media (max-width: 880px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar-panel {
+    position: static;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-badge {
+    margin-top: 6px;
+  }
+}
