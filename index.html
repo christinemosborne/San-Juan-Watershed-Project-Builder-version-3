@@ -1,231 +1,1420 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>San Juan River Watershed Project Builder</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="page">
-      <header class="header">
-        <div>
-          <h1>San Juan River Watershed Project Builder</h1>
-          <p class="subtitle">
-            Practical guide for moving from project idea to implementation in
-            the Utah portion of the San Juan River Watershed.
-          </p>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>San Juan Watershed — Project Funding Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:#0d2b45;
+  --navy-mid:#1a3f5c;
+  --navy-light:#2a5275;
+  --teal:#0e6b6b;
+  --teal-light:#1a8f8f;
+  --teal-bright:#22b5a0;
+  --teal-pale:#e0f4f2;
+  --sand:#f4f1ea;
+  --sand-dark:#e8e3d6;
+  --rust:#c0522a;
+  --rust-light:#fdf0e8;
+  --gold:#b07800;
+  --gold-light:#fef5e0;
+  --green:#2a6e3f;
+  --green-light:#e8f4ec;
+  --white:#ffffff;
+  --muted:#5a7080;
+  --text:#0d2b45;
+  --border:#ccdcda;
+  --pale:#f9f8f5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 112.5%; } /* 18px root — raise or lower this one number to scale all type */
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: var(--pale);
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ── TOP BAR ── */
+.topbar {
+  background: var(--navy);
+  padding: 9px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid var(--teal-bright);
+}
+.topbar-left { display: flex; align-items: center; gap: 18px; }
+.topbar .dept { color: #e8f4fb; font-size: 14px; font-weight: 700; }
+.topbar .div { color: #a8cfe0; font-size: 12px; }
+.topbar-tag {
+  background: var(--teal-bright);
+  color: var(--navy);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 3px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.topbar-right { display: flex; align-items: center; gap: 22px; }
+.watershed-pill { display: flex; align-items: center; gap: 7px; }
+.wlabel { color: #88b4cc; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+.wsep { color: #4a7090; }
+.wname { color: #fff; font-size: 14px; font-weight: 600; }
+.topbar-help { color: #a8cfe0; font-size: 13px; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+.topbar-help:hover { color: #fff; }
+
+/* ── MAIN NAV ── */
+.main-nav {
+  background: var(--navy-light);
+  display: flex;
+  align-items: stretch;
+  border-bottom: 2px solid rgba(255,255,255,.08);
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  padding: 11px 22px;
+  text-decoration: none;
+  border-right: 1px solid rgba(255,255,255,.1);
+  transition: background .15s;
+}
+.nav-item:hover { background: rgba(255,255,255,.08); }
+.nav-item.active { background: rgba(34,181,160,.18); border-bottom: 3px solid var(--teal-bright); }
+.nav-item .nm { color: #fff; font-size: 14px; font-weight: 700; }
+.nav-item .ns { color: #9dc8de; font-size: 12px; margin-top: 2px; }
+.nav-spacer { flex: 1; }
+.nav-actions { display: flex; align-items: center; gap: 8px; padding: 0 20px; }
+.btn-nav-p {
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  transition: background .15s;
+  white-space: nowrap;
+}
+.btn-nav-p:hover { background: var(--teal-light); }
+.btn-nav-o {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,.4);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.btn-nav-o:hover { border-color: #fff; background: rgba(255,255,255,.1); }
+
+/* ── PROGRESS DOTS ── */
+.progress-wrap {
+  background: var(--navy-mid);
+  border-bottom: 2px solid rgba(255,255,255,.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 12px 24px;
+}
+.progress-label {
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #9dc8de;
+  margin-bottom: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.dot {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700;
+  color: #9dc8de;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.dot.done { background: var(--green); border-color: var(--green); color: white; }
+.dot.active { background: var(--teal-bright); border-color: var(--teal-bright); color: var(--navy); font-weight: 800; }
+.dot-line { width: 20px; height: 2px; background: rgba(255,255,255,.2); flex-shrink: 0; }
+.dot-line.done { background: var(--green); }
+.dot-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--navy);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  border: 1px solid rgba(255,255,255,.2);
+}
+.dot:hover .dot-tooltip { opacity: 1; }
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.active { display: block; animation: fadein 0.3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── HERO ── */
+.hero {
+  background: var(--navy-mid);
+  color: white;
+  padding: 52px 24px 80px;
+  text-align: center;
+  position: relative;
+  border-bottom: 3px solid var(--teal-bright);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 48px;
+  background: var(--pale);
+  clip-path: ellipse(55% 48px at 50% 48px);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(34,181,160,.2);
+  border: 1px solid rgba(34,181,160,.4);
+  color: var(--teal-bright);
+  border-radius: 4px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.hero h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  color: white;
+}
+.hero p {
+  font-size: 1rem;
+  opacity: 0.88;
+  max-width: 560px;
+  margin: 0 auto 28px;
+  color: #b8d8e8;
+}
+.hero-start-btn {
+  background: var(--teal-bright);
+  color: var(--navy);
+  border: none;
+  border-radius: 4px;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+.hero-start-btn:hover { background: #29ccb5; transform: translateY(-2px); }
+
+/* ── CONTENT WRAP ── */
+.wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px; }
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--teal-bright);
+  margin-bottom: 8px;
+}
+.section-title {
+  font-family: 'Source Serif 4', serif;
+  font-size: clamp(1.4rem, 4vw, 1.9rem);
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.section-desc {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 580px;
+}
+
+/* ── CHOICE CARDS ── */
+.choice-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.choice-card {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+.choice-card:hover {
+  border-color: var(--teal-bright);
+  background: var(--teal-pale);
+  transform: translateX(4px);
+}
+.choice-card.selected { border-color: var(--teal-bright); background: var(--teal-pale); }
+.choice-icon { font-size: 1.8rem; flex-shrink: 0; width: 48px; text-align: center; }
+.choice-text strong { display: block; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+.choice-text span { font-size: 0.88rem; color: var(--muted); }
+
+/* ── CHECKLIST STEPS ── */
+.check-steps { display: flex; flex-direction: column; gap: 0; }
+.check-step {
+  background: var(--white);
+  border: 1px solid var(--sand-dark);
+  border-radius: 0;
+  overflow: hidden;
+}
+.check-step:first-child { border-radius: 8px 8px 0 0; }
+.check-step:last-child { border-radius: 0 0 8px 8px; }
+.check-step + .check-step { border-top: none; }
+.check-step-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.check-step-header:hover { background: var(--sand); }
+.check-step.done .check-step-header { background: var(--green-light); }
+.check-letter {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 1rem;
+  flex-shrink: 0;
+}
+.check-step.done .check-letter { background: var(--green); }
+.check-step-title { flex: 1; font-weight: 700; font-size: 1rem; color: var(--navy); }
+.check-step.done .check-step-title { color: var(--green); }
+.check-arrow { font-size: 1.1rem; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+.check-step.open .check-arrow { transform: rotate(180deg); }
+.check-body {
+  display: none;
+  padding: 0 18px 18px 70px;
+  border-top: 1px solid var(--sand-dark);
+  background: var(--sand);
+}
+.check-step.open .check-body { display: block; }
+.check-body p { font-size: 0.93rem; color: var(--muted); margin: 14px 0 10px; }
+.check-body ul { padding-left: 18px; }
+.check-body ul li { font-size: 0.93rem; color: var(--text); margin-bottom: 6px; }
+.tip-box {
+  background: var(--gold-light);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  font-size: 0.87rem;
+  color: var(--gold);
+  font-weight: 700;
+  margin-top: 12px;
+}
+.done-btn {
+  background: var(--green);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 14px;
+  transition: background 0.2s;
+}
+.done-btn:hover { background: #1e5530; }
+
+/* ── FORM FIELDS ── */
+.field { margin-bottom: 18px; }
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.field select, .field input, .field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.field select:focus, .field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--teal-bright);
+}
+.field textarea { resize: vertical; min-height: 90px; }
+.field-hint { font-size: 0.83rem; color: var(--muted); margin-top: 5px; }
+
+/* ── TOGGLE CHIPS ── */
+.toggle-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.toggle-chip {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.toggle-chip:hover { border-color: var(--teal-bright); background: var(--teal-pale); }
+.toggle-chip.on { background: var(--teal); border-color: var(--teal); color: white; }
+
+/* ── RESULTS ── */
+#pathway-result { display: none; margin-top: 28px; }
+.result-box {
+  background: var(--navy-mid);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+}
+.result-box h3 { color: var(--teal-bright); font-family: 'Source Serif 4', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; }
+.result-box p { font-size: 0.9rem; color: #b8d8e8; }
+.step-list { list-style: none; margin-bottom: 20px; }
+.step-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--sand-dark);
+}
+.step-item:last-child { border-bottom: none; }
+.step-circle {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--navy-light);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.88rem;
+  flex-shrink: 0;
+}
+.step-text strong { display: block; font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+.step-text span { font-size: 0.87rem; color: var(--muted); }
+.remind-box {
+  background: var(--rust-light);
+  border-left: 4px solid var(--rust);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: var(--rust);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* ── FUNDING RESULTS ── */
+.funding-section {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.funding-section-head {
+  background: var(--navy);
+  color: white;
+  padding: 13px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.funding-section-body { padding: 16px 18px; }
+.funding-pill {
+  display: inline-block;
+  background: var(--white);
+  border: 1.5px solid var(--teal-bright);
+  border-radius: 4px;
+  padding: 5px 13px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--teal);
+  cursor: pointer;
+  margin: 4px;
+  transition: all 0.15s;
+}
+.funding-pill:hover, .funding-pill.active { background: var(--teal); color: white; border-color: var(--teal); }
+.prog-popup {
+  display: none;
+  background: var(--sand);
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 12px;
+  border: 1px solid var(--sand-dark);
+}
+.prog-popup.open { display: block; }
+.prog-popup h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+.prog-row { display: flex; gap: 8px; margin-bottom: 6px; align-items: flex-start; }
+.prog-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; width: 70px; padding-top: 2px; }
+.prog-val { font-size: 0.9rem; color: var(--text); flex: 1; }
+.ex-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.ex-pill { background: var(--teal-pale); border-radius: 3px; padding: 2px 9px; font-size: 0.78rem; font-weight: 700; color: var(--teal); }
+.see-more-btn {
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 12px;
+  transition: background 0.2s;
+}
+.see-more-btn:hover { background: var(--navy-light); }
+
+/* ── BIG BUTTONS ── */
+.big-btn {
+  display: block;
+  width: 100%;
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+  margin-top: 10px;
+  text-align: center;
+}
+.big-btn:hover { background: var(--navy-light); transform: translateY(-1px); }
+.big-btn.secondary {
+  background: white;
+  color: var(--navy);
+  border: 1.5px solid var(--navy);
+}
+.big-btn.secondary:hover { background: var(--sand); transform: none; }
+.big-btn.teal { background: var(--teal); }
+.big-btn.teal:hover { background: var(--teal-light); }
+.big-btn.gold { background: var(--gold); }
+.big-btn.gold:hover { background: #8a6000; }
+.btn-row { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── FINDER ── */
+.finder-box {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.finder-head { background: var(--navy); color: white; padding: 16px 20px; }
+.finder-head h3 { font-family: 'Source Serif 4', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 4px; color: white; }
+.finder-head p { font-size: 0.87rem; color: #9dc8de; }
+.finder-body { padding: 20px; }
+.finder-results { margin-top: 18px; display: none; }
+.finder-results.open { display: block; }
+.finder-card {
+  background: var(--sand);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.finder-card:hover { border-color: var(--teal-bright); background: var(--teal-pale); }
+.fc-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
+.fc-agency { font-size: 0.82rem; color: var(--muted); margin-bottom: 8px; }
+.fc-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.fc-tag { border-radius: 3px; padding: 2px 8px; font-size: 0.76rem; font-weight: 700; }
+.fc-best { background: var(--teal-pale); color: var(--teal); }
+.fc-other { background: var(--sand-dark); color: var(--muted); }
+.fc-boost { background: var(--gold-light); color: var(--gold); }
+.fc-award { background: var(--teal-pale); color: var(--teal); }
+
+/* ── DIRECTORY ── */
+.dir-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.dir-filter-btn {
+  background: white;
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 4px;
+  padding: 6px 14px;
+  font-size: 0.87rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.dir-filter-btn.active, .dir-filter-btn:hover { background: var(--navy); border-color: var(--navy); color: white; }
+.dir-cat { margin-bottom: 32px; }
+.dir-cat-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal-bright);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--sand-dark);
+}
+.prog-btn {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+.prog-btn:hover { border-color: var(--teal-bright); background: var(--teal-pale); }
+.prog-btn-name { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.prog-btn-agency { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+.prog-btn-award { font-size: 0.82rem; color: var(--teal); font-weight: 700; margin-top: 5px; }
+.prog-expand {
+  display: none;
+  background: var(--sand);
+  border: 1.5px solid var(--sand-dark);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 14px 16px;
+  margin-top: -8px;
+  margin-bottom: 8px;
+}
+.prog-expand.open { display: block; }
+.pe-row { margin-bottom: 10px; }
+.pe-label { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.pe-val { font-size: 0.92rem; color: var(--text); }
+.hidden-cat { display: none; }
+
+/* ── CROSSWALK ── */
+.cw-item {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.cw-item:hover { border-color: var(--teal-bright); }
+.cw-item-head {
+  padding: 13px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.cw-item-name { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.cw-item-arrow { color: var(--teal-bright); font-size: 1rem; flex-shrink: 0; }
+.cw-item.open .cw-item-arrow { transform: rotate(180deg); display: inline-block; }
+.cw-item-body {
+  display: none;
+  padding: 0 16px 14px;
+  border-top: 1px solid var(--sand-dark);
+  background: var(--sand);
+}
+.cw-item.open .cw-item-body { display: block; }
+.cw-item-body p { font-size: 0.87rem; color: var(--muted); margin: 10px 0 8px; }
+.cw-programs { display: flex; flex-wrap: wrap; gap: 6px; }
+.cw-best {
+  background: var(--teal-pale);
+  color: var(--teal);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cw-best:hover { background: var(--teal); color: white; }
+.cw-other {
+  background: var(--sand-dark);
+  color: var(--muted);
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.cw-other:hover { background: var(--border); }
+
+/* ── WORKSHEET ── */
+.ws-card {
+  background: var(--white);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 8px;
+  padding: 24px 22px;
+  margin-bottom: 18px;
+}
+.ws-card h3 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1.5px solid var(--sand-dark);
+}
+.ws-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media(max-width:440px){ .ws-checks { grid-template-columns: 1fr; } }
+.ws-chk {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--sand);
+  border: 1.5px solid var(--sand-dark);
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: all 0.15s;
+}
+.ws-chk:hover { border-color: var(--teal-bright); background: var(--teal-pale); }
+.ws-chk input { accent-color: var(--teal); width: 16px; height: 16px; }
+.question-box {
+  background: var(--teal-pale);
+  border-left: 4px solid var(--teal-bright);
+  border-radius: 0 6px 6px 0;
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--teal);
+  font-weight: 700;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 24px 20px;
+  font-size: 0.83rem;
+  margin-top: 40px;
+}
+footer strong { color: rgba(255,255,255,0.9); }
+
+@media print {
+  .progress-wrap, .topbar, .main-nav, footer, .big-btn, .btn-row { display: none !important; }
+  .page { display: none !important; }
+  #page-worksheet { display: block !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div>
+      <div class="dept">Utah Dept. of Environmental Quality</div>
+      <div class="div">Division of Water Quality</div>
+    </div>
+    <span class="topbar-tag">9-Element Watershed Plan</span>
+  </div>
+  <div class="topbar-right">
+    <div class="watershed-pill">
+      <span class="wlabel">You are viewing</span>
+      <span class="wsep">›</span>
+      <span class="wname">Lower San Juan Watershed</span>
+    </div>
+    <a href="#" class="topbar-help">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      Help &amp; glossary
+    </a>
+  </div>
+</div>
+
+<!-- MAIN NAV -->
+<nav class="main-nav">
+  <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/index.html" class="nav-item">
+    <span class="nm">Home</span>
+    <span class="ns">Overview &amp; about</span>
+  </a>
+  <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/lsj_goals.html" class="nav-item">
+    <span class="nm">Plan goals</span>
+    <span class="ns">Targets &amp; outcomes</span>
+  </a>
+  <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/lsj_goal_panels.html" class="nav-item">
+    <span class="nm">Goal explorer</span>
+    <span class="ns">Maps &amp; priorities</span>
+  </a>
+  <a href="https://experience.arcgis.com/experience/e397598183d1426ebd9e5e85a813ff23" target="_blank" class="nav-item">
+    <span class="nm">Spatial explorer ↗</span>
+    <span class="ns">Interactive maps</span>
+  </a>
+  <a href="#" class="nav-item active">
+    <span class="nm">Project Funding Guide</span>
+    <span class="ns">Grants &amp; programs</span>
+  </a>
+  <div class="nav-spacer"></div>
+  <div class="nav-actions">
+    <a href="#" class="btn-nav-p">Share your input</a>
+    <a href="#" class="btn-nav-o">Read the full plan</a>
+  </div>
+</nav>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-label" id="progress-label">Step 1 of 7 — Let's Get Started</div>
+  <div class="dots" id="dots-row">
+    <div class="dot active" data-page="start" onclick="goTo('start')">1<div class="dot-tooltip">Get Started</div></div>
+    <div class="dot-line" id="line-1"></div>
+    <div class="dot" data-page="before" onclick="goTo('before')">2<div class="dot-tooltip">Before You Apply</div></div>
+    <div class="dot-line" id="line-2"></div>
+    <div class="dot" data-page="pathway" onclick="goTo('pathway')">3<div class="dot-tooltip">Your Pathway</div></div>
+    <div class="dot-line" id="line-3"></div>
+    <div class="dot" data-page="finder" onclick="goTo('finder')">4<div class="dot-tooltip">Find Funding</div></div>
+    <div class="dot-line" id="line-4"></div>
+    <div class="dot" data-page="directory" onclick="goTo('directory')">5<div class="dot-tooltip">Funding Directory</div></div>
+    <div class="dot-line" id="line-5"></div>
+    <div class="dot" data-page="crosswalk" onclick="goTo('crosswalk')">6<div class="dot-tooltip">Program Matcher</div></div>
+    <div class="dot-line" id="line-6"></div>
+    <div class="dot" data-page="worksheet" onclick="goTo('worksheet')">7<div class="dot-tooltip">My Worksheet</div></div>
+  </div>
+</div>
+
+<!-- ═══ PAGE 1: GET STARTED ═══════════════════════════════ -->
+<div class="page active" id="page-start">
+  <div class="hero">
+    <div class="hero-badge">🌊 Lower San Juan Watershed</div>
+    <h1>Project Funding Guide</h1>
+    <p>This guide helps chapters and communities match real water, land, and community problems to grants and programs that fit. Use only the parts you need.</p>
+    <button class="hero-start-btn" onclick="goTo('before')">Let's Get Started →</button>
+  </div>
+
+  <div class="wrap">
+    <div class="section-label">Where do you want to start?</div>
+    <div class="section-title">Pick the path that fits you best</div>
+    <div class="section-desc">You don't need to go through all 7 steps. Jump to wherever makes sense for your project.</div>
+
+    <div class="choice-cards">
+      <div class="choice-card" onclick="goTo('before')">
+        <div class="choice-icon">📋</div>
+        <div class="choice-text">
+          <strong>I have a problem on the ground and need help getting started</strong>
+          <span>Start at the beginning — we'll help you check location, approvals, and what you need before applying.</span>
         </div>
-        <div class="header-badge">
-          <span>Living document</span>
-          <span class="dot">•</span>
-          <span>Review annually with Tribal leadership</span>
+      </div>
+      <div class="choice-card" onclick="goTo('finder')">
+        <div class="choice-icon">💰</div>
+        <div class="choice-text">
+          <strong>I know my project — I just need to find funding</strong>
+          <span>Jump straight to the Funding Finder and see which programs match your project type.</span>
         </div>
-      </header>
-
-      <main class="layout">
-        <div class="layout-main">
-          <div class="panel">
-            <h2>Project setup</h2>
-            <p class="subtitle">
-              Fill this out once at the beginning. The builder will generate a
-              pathway based on your project type and context.
-            </p>
-
-            <form id="project-form" class="project-form">
-              <div class="field">
-                <label for="projectName">
-                  Project name
-                  <span class="required">*</span>
-                </label>
-                <input
-                  id="projectName"
-                  name="projectName"
-                  type="text"
-                  placeholder="Example: Oljato livestock water and riparian restoration"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label for="communityChapter">
-                  Community / Chapter
-                  <span class="required">*</span>
-                </label>
-                <input
-                  id="communityChapter"
-                  name="communityChapter"
-                  type="text"
-                  placeholder="Example: Aneth, Oljato, Navajo Mountain, White Mesa, Blanding"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label for="projectTypeId">
-                  Project type
-                  <span class="required">*</span>
-                </label>
-                <select id="projectTypeId" name="projectTypeId" required>
-                  <option value="">Select…</option>
-                  <!-- Populated by script.js -->
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="jurisdictionPattern">
-                  Jurisdiction pattern
-                </label>
-                <textarea
-                  id="jurisdictionPattern"
-                  name="jurisdictionPattern"
-                  rows="3"
-                  placeholder="Example: Chapter + Navajo Nation + San Juan County + BLM"
-                ></textarea>
-              </div>
-
-              <div class="field">
-                <label for="urgency">
-                  Urgency
-                  <span class="required">*</span>
-                </label>
-                <select id="urgency" name="urgency" required>
-                  <option value="">Select…</option>
-                  <option>Emergency – life/health safety</option>
-                  <option>High – critical infrastructure or acute damage</option>
-                  <option>Medium – important but not life safety</option>
-                  <option>Low – planning or long-term opportunity</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="currentStage">
-                  Current stage
-                  <span class="required">*</span>
-                </label>
-                <select id="currentStage" name="currentStage" required>
-                  <option value="">Select…</option>
-                  <option>Idea only</option>
-                  <option>Concept documented</option>
-                  <option>Contacts started</option>
-                  <option>Design / planning underway</option>
-                  <option>Funding applications in progress</option>
-                  <option>Implementation / construction</option>
-                  <option>Monitoring / follow-up</option>
-                </select>
-              </div>
-
-              <div class="field">
-                <label for="needDescription">
-                  Need or issue description
-                  <span class="required">*</span>
-                </label>
-                <textarea
-                  id="needDescription"
-                  name="needDescription"
-                  rows="4"
-                  placeholder="Briefly describe what is happening, who is affected, and what a successful project would change."
-                  required
-                ></textarea>
-              </div>
-
-              <div class="form-footer">
-                <span id="form-status" class="form-status">
-                  Required fields marked with *
-                </span>
-                <div class="form-actions">
-                  <button type="button" id="clear-form">Clear form</button>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <div id="project-summary" class="panel muted">
-            Select a project type to see the recommended pathway.
-          </div>
-
-          <div class="panel">
-            <h2>Cross-cutting coordination sequence</h2>
-            <p class="subtitle">
-              These steps generally apply across most projects in the Utah
-              portion of the San Juan River Watershed.
-            </p>
-            <ol id="coordination-sequence"></ol>
-          </div>
-
-          <div class="panel">
-            <h2>Project pathway matrix</h2>
-            <p class="subtitle">
-              Quick view of first calls, second calls, third calls, and top
-              funding combinations by project type.
-            </p>
-            <div class="table-wrapper">
-              <table class="matrix-table" id="matrix-table">
-                <thead>
-                  <tr>
-                    <th>Project type</th>
-                    <th>First call</th>
-                    <th>Second call</th>
-                    <th>Third call</th>
-                    <th>Top funding combinations</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Populated by script.js -->
-                </tbody>
-              </table>
-            </div>
-          </div>
+      </div>
+      <div class="choice-card" onclick="goTo('pathway')">
+        <div class="choice-icon">🗺️</div>
+        <div class="choice-text">
+          <strong>I want to know who to talk to and in what order</strong>
+          <span>Use the Project Pathway Builder to get a step-by-step list of who to contact first.</span>
         </div>
-
-        <aside class="layout-sidebar">
-          <div class="panel sidebar-panel">
-            <h2>Project types</h2>
-            <p class="subtitle">
-              Choose the pathway that best matches your issue or opportunity.
-            </p>
-            <ul class="type-list" id="type-list">
-              <!-- Populated by script.js -->
-            </ul>
-          </div>
-
-          <div class="panel sidebar-panel">
-            <h2>How to use this tool</h2>
-            <ul class="help-list">
-              <li>
-                Start by entering the project name, Chapter, and a short
-                description of the issue or opportunity.
-              </li>
-              <li>
-                Select the project type that best fits the situation (you can
-                change it later if needed).
-              </li>
-              <li>
-                Review the generated pathway: who to call first, which entities
-                to bring in next, and likely funding combinations.
-              </li>
-              <li>
-                Use the cross-cutting sequence to align Tribal, county, state,
-                and federal coordination in the right order.
-              </li>
-              <li>
-                Treat this as a starting framework, not a substitute for legal
-                review, Tribal approval, or agency consultation.
-              </li>
-            </ul>
-          </div>
-        </aside>
-      </main>
-
-      <footer class="footer">
-        <p>
-          Built from the Lower San Juan River Watershed Project Builder process
-          and project-type pathways for Tribal, local, state, and federal
-          coordination.
-        </p>
-      </footer>
+      </div>
+      <div class="choice-card" onclick="goTo('worksheet')">
+        <div class="choice-icon">📝</div>
+        <div class="choice-text">
+          <strong>I want to fill out a worksheet to get organized</strong>
+          <span>Go straight to the Project Worksheet — a simple form to fill out before meeting with agencies.</span>
+        </div>
+      </div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <div style="background:var(--teal-pale);border-left:4px solid var(--teal-bright);border-radius:0 6px 6px 0;padding:16px 18px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:0.95rem;color:var(--teal);margin-bottom:6px">⏱ Only have 10 minutes?</div>
+      <div style="font-size:0.9rem;color:var(--teal)">
+        1. Write down what the problem is, where it is, and who is affected.<br>
+        2. Use the <strong>Funding Finder</strong> (Step 4) to find 1–3 matching programs.<br>
+        3. Call or email the agency contact and ask: "Is this a good fit for our situation?"
+      </div>
+    </div>
+
+    <button class="big-btn teal" onclick="goTo('before')">Start Here: Before You Apply →</button>
+  </div>
+</div>
+
+<!-- ═══ PAGE 2: BEFORE YOU APPLY ══════════════════════════ -->
+<div class="page" id="page-before">
+  <div class="wrap">
+    <div class="section-label">Step 2 of 7</div>
+    <div class="section-title">Before You Apply</div>
+    <div class="section-desc">Check these 6 things before you start applying for funding. Click each one to read more — then mark it done when you're ready.</div>
+
+    <div class="check-steps">
+      <div class="check-step" id="cs-A">
+        <div class="check-step-header" onclick="toggleCheck('A')">
+          <div class="check-letter">A</div>
+          <div class="check-step-title">Know where your project is located</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>Before you look for funding, you need to know exactly where the project is and what kind of land it's on.</p>
+          <ul>
+            <li>Is it in the Lower San Juan watershed? (This matters for some grants)</li>
+            <li>What kind of land is it — tribal trust, allotted, private, state, or federal?</li>
+            <li>Does the project cross from one type of land to another?</li>
+          </ul>
+          <div class="tip-box">💡 If you cross from one jurisdiction to another, you'll probably need approval from both governments — but there may also be more funding available.</div>
+          <button class="done-btn" onclick="markDone('A')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+      <div class="check-step" id="cs-B">
+        <div class="check-step-header" onclick="toggleCheck('B')">
+          <div class="check-letter">B</div>
+          <div class="check-step-title">Know what type of project it is</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>Different types of projects match different funding programs. Pick the category that fits best:</p>
+          <ul>
+            <li>Drinking water or wastewater for homes and communities</li>
+            <li>Irrigation or livestock water (canals, ditches, wells, stock ponds)</li>
+            <li>Grazing land and rangeland health</li>
+            <li>Erosion and sediment washing into washes or the San Juan River</li>
+            <li>Riparian restoration (plants and habitat along streams)</li>
+            <li>Planning, monitoring, or climate resilience</li>
+          </ul>
+          <div class="tip-box">💡 If it fits more than one category, that's OK — you may be able to bundle funding from multiple programs.</div>
+          <button class="done-btn" onclick="markDone('B')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+      <div class="check-step" id="cs-C">
+        <div class="check-step-header" onclick="toggleCheck('C')">
+          <div class="check-letter">C</div>
+          <div class="check-step-title">Line up your local approvals</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>Most grants require that the chapter or community has already agreed to the project. Ask yourself:</p>
+          <ul>
+            <li>Does the chapter need to pass a resolution supporting this project?</li>
+            <li>If it's on grazing land — do you need the grazing committee or individual permittees to agree?</li>
+            <li>Are there any known conflicts — like a lease holder, a right-of-way issue, or a sacred site nearby?</li>
+          </ul>
+          <div class="tip-box">💡 Having a chapter resolution in hand before you call an agency makes a big difference — it shows the community is behind the project.</div>
+          <button class="done-btn" onclick="markDone('C')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+      <div class="check-step" id="cs-D">
+        <div class="check-step-header" onclick="toggleCheck('D')">
+          <div class="check-letter">D</div>
+          <div class="check-step-title">Check if a plan or study already exists</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>Projects that come from an existing plan are easier to fund. Check if you have any of these:</p>
+          <ul>
+            <li>A watershed plan, drought plan, or conservation plan that mentions this location or problem</li>
+            <li>Any past engineering reports, water quality data, or range assessments</li>
+          </ul>
+          <div class="tip-box">💡 If you don't have a plan yet — that's OK. Some programs pay for planning first. Look for programs labeled "planning" or "technical assistance" in the Funding Directory.</div>
+          <button class="done-btn" onclick="markDone('D')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+      <div class="check-step" id="cs-E">
+        <div class="check-step-header" onclick="toggleCheck('E')">
+          <div class="check-letter">E</div>
+          <div class="check-step-title">Be honest about staff time and match</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>Two questions to answer honestly at the chapter level:</p>
+          <ul>
+            <li><strong>Who will manage the grant?</strong> Someone needs to handle reports, invoices, and communication with the funder.</li>
+            <li><strong>Can you provide match?</strong> Many programs require you to cover part of the cost — this can be cash, staff time, equipment use, or volunteer labor.</li>
+          </ul>
+          <div class="tip-box">💡 If staff time is your biggest barrier right now, start with capacity-building programs like GAP, Section 106, WMPPD, or TCR — these can pay for a coordinator to help get other projects funded.</div>
+          <button class="done-btn" onclick="markDone('E')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+      <div class="check-step" id="cs-F">
+        <div class="check-step-header" onclick="toggleCheck('F')">
+          <div class="check-letter">F</div>
+          <div class="check-step-title">Call the right people early</div>
+          <div class="check-arrow">▾</div>
+        </div>
+        <div class="check-body">
+          <p>This guide helps you prepare — but it doesn't replace talking to people. Before you apply:</p>
+          <ul>
+            <li>Contact your <strong>tribal program staff</strong> (water, environmental, agriculture, planning, or grants departments)</li>
+            <li>Contact the closest <strong>agency field staff</strong> (NRCS office, Bureau of Reclamation, EPA tribal coordinator, or state program contacts)</li>
+          </ul>
+          <div class="tip-box">💡 Your opening question: <em>"I have a project idea. I found your program in the Lower San Juan Watershed funding guide. Is this a good fit for our situation, and what should we do first?"</em></div>
+          <button class="done-btn" onclick="markDone('F')">✓ Got it — mark complete</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="bya-done-msg" style="display:none;background:var(--green-light);border:1.5px solid var(--green);border-radius:6px;padding:14px 16px;margin-top:16px;font-weight:700;color:var(--green)">
+      ✅ All 6 steps checked! You're ready to build your project pathway.
+    </div>
+
+    <div class="btn-row" style="margin-top:20px">
+      <button class="big-btn teal" onclick="goTo('pathway')">Next: Build Your Pathway →</button>
+      <button class="big-btn secondary" onclick="goTo('start')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PAGE 3–7: UNCHANGED CONTENT (pathway, finder, directory, crosswalk, worksheet) ═══ -->
+<!-- These pages retain the same HTML content as the original, restyled via CSS above -->
+
+<div class="page" id="page-pathway">
+  <div class="wrap">
+    <div class="section-label">Step 3 of 7</div>
+    <div class="section-title">Who do I talk to — and in what order?</div>
+    <div class="section-desc">Answer these questions and we'll give you a step-by-step list of who to contact for your project.</div>
+    <div class="field"><label>What kind of project is it?</label><select id="proj-type"><option value="">— Pick one —</option><option value="irrigation">Irrigation, canal, or ditch</option><option value="culinary">Drinking water for homes or the community</option><option value="quality">Water quality or contamination problem</option><option value="livestock">Livestock watering or grazing improvement</option><option value="erosion">Erosion, sediment, or road washing out</option><option value="riparian">Riparian or habitat restoration</option><option value="flood">Flooding or drainage problem</option><option value="community">Capacity building or community development</option></select></div>
+    <div class="field"><label>Where is the project located?</label><select id="proj-location"><option value="">— Pick one —</option><optgroup label="Navajo Nation Utah Chapters"><option value="aneth">Aneth Chapter</option><option value="mexican-water">Mexican Water Chapter</option><option value="navajo-mountain">Navajo Mountain Chapter</option><option value="oljato">Oljato Chapter</option><option value="red-mesa">Red Mesa Chapter</option><option value="teec-nos-pos">Teec Nos Pos Chapter</option><option value="sweetwater">Sweetwater Chapter</option></optgroup><optgroup label="Ute Mountain Ute"><option value="white-mesa">White Mesa</option></optgroup><optgroup label="Municipalities"><option value="bluff">Bluff</option><option value="blanding">Blanding</option><option value="monticello">Monticello</option><option value="la-sal">La Sal</option></optgroup></select></div>
+    <div class="field"><label>What kinds of land does it cross? <span style="font-weight:400;text-transform:none;letter-spacing:0">(tap all that apply)</span></label><div class="toggle-group" id="land-chips"><button class="toggle-chip" data-val="navajo" onclick="toggleLand(this)">Navajo Nation land</button><button class="toggle-chip" data-val="ute" onclick="toggleLand(this)">Ute Mountain Ute land</button><button class="toggle-chip" data-val="state" onclick="toggleLand(this)">Utah state land</button><button class="toggle-chip" data-val="county" onclick="toggleLand(this)">San Juan County land</button><button class="toggle-chip" data-val="federal" onclick="toggleLand(this)">Federal land (BLM or Forest Service)</button></div></div>
+    <div class="field"><label>Does your project involve water rights?</label><select id="proj-water"><option value="">— Pick one —</option><option value="yes-divert">Yes — it uses San Juan River water</option><option value="yes-quality">Yes — it fixes a water quality or contamination problem</option><option value="no">No water rights involved</option></select></div>
+    <button class="big-btn teal" onclick="buildPathway()" style="margin-bottom:0">Show Me Who to Contact →</button>
+    <div id="pathway-result">
+      <div class="result-box" style="margin-top:24px"><h3 id="result-title">Your Engagement Steps</h3><p id="result-sub"></p></div>
+      <ol class="step-list" id="step-list"></ol>
+      <div class="remind-box">Important: Start having informal conversations with Chapter and Tribal leadership <em>before</em> and alongside these formal steps — relationships matter as much as paperwork.</div>
+      <div id="pathway-funding-box" style="display:none"><div class="funding-section"><div class="funding-section-head">💰 Funding Programs That Often Match This Project Type</div><div class="funding-section-body"><p style="font-size:0.88rem;color:var(--text);margin-bottom:10px">Tap any program to see a quick summary. For full details, go to the Funding Directory (Step 5).</p><div id="pathway-funding-pills"></div><div class="prog-popup" id="pathway-prog-popup"><h4 id="ppop-name"></h4><div class="prog-row"><span class="prog-label">Agency</span><span class="prog-val" id="ppop-agency"></span></div><div class="prog-row"><span class="prog-label">Funding</span><span class="prog-val" id="ppop-award"></span></div><div class="prog-row"><span class="prog-label">Match</span><span class="prog-val" id="ppop-match"></span></div><div class="prog-row"><span class="prog-label">Best for</span><span class="prog-val" id="ppop-best"></span></div><div class="ex-list" id="ppop-examples"></div><button class="see-more-btn" id="ppop-dir-btn" onclick="">See full details in directory →</button></div></div></div></div>
+      <div class="btn-row" style="margin-top:4px"><button class="big-btn teal" onclick="goTo('finder')">Find Funding Programs →</button><button class="big-btn secondary" onclick="resetPathway()">← Start Over</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-finder">
+  <div class="wrap">
+    <div class="section-label">Step 4 of 7</div>
+    <div class="section-title">Find the Right Funding</div>
+    <div class="section-desc">Pick your project type and your biggest barrier. We'll show you the programs that fit best — ranked by how well they match.</div>
+    <div class="finder-box">
+      <div class="finder-head"><h3>💰 Funding Finder</h3><p>Two questions. Ranked results. Tap any result to see details.</p></div>
+      <div class="finder-body">
+        <div class="field"><label>What is your project or problem?</label><select id="finder-type" onchange="runFinder()"><option value="">— Pick one —</option><option value="solar-well">Solar-powered livestock well or pump</option><option value="livestock-trough">Livestock watering trough</option><option value="cross-fence">Cross-fencing or rotational grazing</option><option value="range-plan">Rangeland assessment or plan</option><option value="erosion">Erosion control or stream stabilization</option><option value="check-dam">Check dams or sediment control</option><option value="road-drain">Road or drainage improvement</option><option value="riparian">Riparian restoration</option><option value="invasive">Invasive species removal</option><option value="water-line">Drinking water line extension</option><option value="arsenic-uranium">Water treatment (arsenic or uranium)</option><option value="septic">Septic system replacement</option><option value="wastewater-plant">Wastewater treatment plant</option><option value="canal-lining">Canal or ditch lining</option><option value="drip-irrigation">Drip irrigation</option><option value="water-monitoring">Water quality monitoring</option><option value="feasibility">Feasibility study or engineering report</option><option value="watershed-plan">Watershed plan</option><option value="climate-plan">Climate adaptation plan</option><option value="capacity">Hiring staff or a coordinator</option></select></div>
+        <div class="field"><label>What is your biggest barrier right now? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><select id="finder-barrier" onchange="runFinder()"><option value="">— Optional —</option><option value="staff">We don't have enough staff time</option><option value="planning">We don't have a plan or study yet</option><option value="match">Match or cost-share is hard</option><option value="construction">We need construction money</option></select></div>
+        <div class="finder-results" id="finder-results">
+          <div style="font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:12px">Programs that fit your project:</div>
+          <div id="finder-list"></div>
+          <div id="finder-detail" style="display:none;background:var(--sand);border:1.5px solid var(--sand-dark);border-radius:6px;padding:16px;margin-top:12px">
+            <h4 id="fd-name" style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:10px"></h4>
+            <div class="prog-row"><span class="prog-label">Agency</span><span class="prog-val" id="fd-agency"></span></div>
+            <div class="prog-row"><span class="prog-label">Funding</span><span class="prog-val" id="fd-award"></span></div>
+            <div class="prog-row"><span class="prog-label">Match</span><span class="prog-val" id="fd-match"></span></div>
+            <div class="prog-row"><span class="prog-label">Best for</span><span class="prog-val" id="fd-best"></span></div>
+            <div class="prog-row"><span class="prog-label">Eligibility</span><span class="prog-val" id="fd-criteria"></span></div>
+            <div class="ex-list" id="fd-examples"></div>
+            <button class="see-more-btn" id="fd-dir-btn">See full entry in directory →</button>
+          </div>
+          <p style="font-size:0.8rem;color:var(--muted);margin-top:12px">Funding ranges are from recent cycles and may change. Always confirm details with the agency before applying.</p>
+        </div>
+      </div>
+    </div>
+    <div style="background:var(--teal-pale);border-left:4px solid var(--teal-bright);border-radius:0 6px 6px 0;padding:14px 16px;margin-bottom:20px">
+      <div style="font-weight:700;font-size:0.92rem;color:var(--teal);margin-bottom:4px">💡 Tip: Bundle projects across chapters</div>
+      <div style="font-size:0.88rem;color:var(--teal)">Erosion in one wash, a failing road in another chapter, and grazing pressure upstream may all feed the same problem. When chapters plan together, you can combine projects and match them to multiple funding sources.</div>
+    </div>
+    <div class="btn-row"><button class="big-btn teal" onclick="goTo('directory')">Next: Full Funding Directory →</button><button class="big-btn secondary" onclick="goTo('pathway')">← Back</button></div>
+  </div>
+</div>
+
+<div class="page" id="page-directory">
+  <div class="wrap">
+    <div class="section-label">Step 5 of 7</div>
+    <div class="section-title">Funding Directory</div>
+    <div class="section-desc">All funding programs for the Lower San Juan Watershed. Filter by category and tap any program to see details.</div>
+    <div class="dir-filter">
+      <button class="dir-filter-btn active" onclick="filterDir('all',this)">All Programs</button>
+      <button class="dir-filter-btn" onclick="filterDir('federal-ag',this)">Agriculture (NRCS)</button>
+      <button class="dir-filter-btn" onclick="filterDir('drought',this)">Water Efficiency</button>
+      <button class="dir-filter-btn" onclick="filterDir('tribal-water',this)">Tribal Water</button>
+      <button class="dir-filter-btn" onclick="filterDir('state',this)">State Programs</button>
+      <button class="dir-filter-btn" onclick="filterDir('water-quality',this)">Water Quality (EPA)</button>
+    </div>
+    <div id="dir-content"></div>
+    <div class="btn-row"><button class="big-btn teal" onclick="goTo('crosswalk')">Next: Program Matcher →</button><button class="big-btn secondary" onclick="goTo('finder')">← Back</button></div>
+  </div>
+</div>
+
+<div class="page" id="page-crosswalk">
+  <div class="wrap">
+    <div class="section-label">Step 6 of 7</div>
+    <div class="section-title">Program Matcher</div>
+    <div class="section-desc">Find your project type and see which programs fit best. Tap any program name to jump to its full entry in the Funding Directory.</div>
+    <div class="dir-filter" id="cw-filter">
+      <button class="dir-filter-btn active" onclick="filterCW('all',this)">All</button>
+      <button class="dir-filter-btn" onclick="filterCW('livestock',this)">Livestock &amp; Grazing</button>
+      <button class="dir-filter-btn" onclick="filterCW('erosion',this)">Erosion</button>
+      <button class="dir-filter-btn" onclick="filterCW('riparian',this)">Riparian</button>
+      <button class="dir-filter-btn" onclick="filterCW('water',this)">Drinking Water</button>
+      <button class="dir-filter-btn" onclick="filterCW('irrigation',this)">Irrigation</button>
+      <button class="dir-filter-btn" onclick="filterCW('planning',this)">Planning</button>
+    </div>
+    <div id="cw-content"></div>
+    <div class="btn-row"><button class="big-btn teal" onclick="goTo('worksheet')">Next: My Project Worksheet →</button><button class="big-btn secondary" onclick="goTo('directory')">← Back</button></div>
+  </div>
+</div>
+
+<div class="page" id="page-worksheet">
+  <div class="wrap">
+    <div class="section-label">Step 7 of 7</div>
+    <div class="section-title">My Project Worksheet</div>
+    <div class="section-desc">Fill this out before you meet with agencies or apply for grants. Print it and bring it to your first meeting.</div>
+    <div class="ws-card"><h3>1. Basic Information</h3><div class="field"><label>Project name (short, plain language)</label><input type="text" id="ws-name" placeholder="e.g., Red Mesa Livestock Well Repair"></div><div class="field"><label>Chapter or community</label><input type="text" id="ws-chapter" placeholder="e.g., Red Mesa Chapter"></div><div class="field"><label>Grazing unit (if this is a grazing project)</label><input type="text" id="ws-grazing"></div><div class="field"><label>Your name and contact info</label><input type="text" id="ws-contact" placeholder="Name, phone, email"></div><div class="field"><label>Date</label><input type="text" id="ws-date" placeholder="MM/DD/YYYY" style="max-width:180px"></div></div>
+    <div class="ws-card"><h3>2. Describe your project in 2–3 sentences</h3><div class="field"><textarea id="ws-desc" rows="4" placeholder="What is the problem? Where is it? Who is affected? How big is it?&#10;&#10;Example: &quot;The livestock well in Grazing Unit 12 has been broken for 2 years. Cattle are crowding a spring that drains to the San Juan River and causing erosion. About 5 permittees and 200 head of cattle are affected.&quot;"></textarea><div class="field-hint">This description is what you'll share with agency staff when you call. Keep it short and specific.</div></div></div>
+    <div class="ws-card"><h3>3. Location and land status</h3><div class="field"><label>What kind of land is involved? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Navajo Nation trust land</label><label class="ws-chk"><input type="checkbox"> Allotted land</label><label class="ws-chk"><input type="checkbox"> Private land</label><label class="ws-chk"><input type="checkbox"> Utah state land</label><label class="ws-chk"><input type="checkbox"> Federal land (BLM/USFS)</label><label class="ws-chk"><input type="checkbox"> San Juan County land</label></div></div><div class="field"><label>Does the project cross from one type of land to another?</label><select id="ws-cross"><option value="">— Select —</option><option>Yes</option><option>No</option></select></div><div class="field"><label>If yes, which ones does it cross?</label><input type="text" id="ws-cross-detail" placeholder="e.g., Navajo Nation land into Utah state land"></div></div>
+    <div class="ws-card"><h3>4. What type of project is it?</h3><div class="field"><label>Check all that apply</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Drinking water or wastewater</label><label class="ws-chk"><input type="checkbox"> Irrigation or livestock water</label><label class="ws-chk"><input type="checkbox"> Grazing or rangeland</label><label class="ws-chk"><input type="checkbox"> Erosion or sediment</label><label class="ws-chk"><input type="checkbox"> Riparian or habitat</label><label class="ws-chk"><input type="checkbox"> Planning or monitoring</label></div></div></div>
+    <div class="ws-card"><h3>5. Approvals and existing plans</h3><div class="field"><label>What approvals do you need? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Chapter resolution</label><label class="ws-chk"><input type="checkbox"> Grazing committee resolution</label><label class="ws-chk"><input type="checkbox"> Grazing permittee consent</label><label class="ws-chk"><input type="checkbox"> Other (lease, right-of-way, etc.)</label></div></div><div class="field"><label>Do you have any existing plans or data? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Watershed or drought plan</label><label class="ws-chk"><input type="checkbox"> Conservation or range plan</label><label class="ws-chk"><input type="checkbox"> Engineering reports</label><label class="ws-chk"><input type="checkbox"> Water quality data</label><label class="ws-chk"><input type="checkbox"> None yet</label></div></div><div class="field"><label>Notes on plans or approvals</label><textarea id="ws-plans" rows="2"></textarea></div></div>
+    <div class="ws-card"><h3>6. Capacity and match</h3><div class="field"><label>Who will manage the grant (reports, invoices, agency communication)?</label><textarea id="ws-manager" rows="2"></textarea></div><div class="field"><label>What match can you provide? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Cash</label><label class="ws-chk"><input type="checkbox"> Staff time</label><label class="ws-chk"><input type="checkbox"> Equipment use</label><label class="ws-chk"><input type="checkbox"> Volunteer labor</label><label class="ws-chk"><input type="checkbox"> Tribal funds</label><label class="ws-chk"><input type="checkbox"> Partner funds</label></div></div></div>
+    <div class="ws-card"><h3>7. Programs I'm interested in</h3><div id="ws-prog-rows"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 1</label><input type="text" placeholder="e.g., EQIP"></div><div class="field" style="margin:0"><label>Agency</label><input type="text" placeholder="e.g., NRCS"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 2</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 3</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div></div><div class="field"><label>Tribal staff to contact</label><textarea id="ws-tribal" rows="2"></textarea></div><div class="field"><label>Agency staff to contact</label><textarea id="ws-agency" rows="2"></textarea></div><div class="question-box">📞 Questions to ask when you call:<br>"Does this program fit our situation?" &nbsp;·&nbsp;"What do we need to do first before we can apply?" &nbsp;·&nbsp;"Are there other programs that might be a better fit?"</div></div>
+    <div class="btn-row"><button class="big-btn" onclick="window.print()">🖨️ Print My Worksheet</button><button class="big-btn teal" onclick="goTo('finder')">← Go Back to Funding Finder</button><button class="big-btn secondary" onclick="clearWS()">Clear All Fields</button></div>
+  </div>
+</div>
+
+<footer>
+  <strong>San Juan River Watershed — Project Funding Guide</strong><br>
+  Utah Division of Water Quality · Lower San Juan Watershed Plan
+</footer>
+
+<script>
+const P = {
+  EQIP:{name:'Environmental Quality Incentives Program (EQIP)',agency:'NRCS',cat:'federal-ag',award:'Up to 90% of costs for tribes (standard 75%)',match:'Up to 25%; tribes can receive 50% of funding upfront',best:'Farm, ranch, and grazing land improvements',criteria:'Must have control over the land. Tribal income limit waiver available for significant environmental/social benefits.',examples:['Solar pumps, pipelines, troughs','Cross-fencing','Brush management','Drip irrigation','Rotational grazing']},
+  AMA:{name:'Agricultural Management Assistance (AMA)',agency:'NRCS',cat:'federal-ag',award:'Up to 75% of costs; max $50,000/year',match:'25% cost-share',best:'Agricultural producers managing financial risk through conservation',criteria:'Land where agricultural commodities or livestock are produced, including subsistence use.',examples:['Drip irrigation','Solar-powered wells','Canal lining','Cover cropping','Seasonal hoop tunnels']},
+  CSP:{name:'Conservation Stewardship Program (CSP)',agency:'NRCS',cat:'federal-ag',award:'$4,000–$200,000 over 5 years',match:'None required',best:'Existing stewards who already practice good conservation',criteria:'Must already meet stewardship threshold for at least 2 priority resource concerns.',examples:['Rotational grazing improvements','Wildlife-friendly fencing','Forage health monitoring','Riparian buffers','Pollinator habitats']},
+  CTA:{name:'Conservation Technical Assistance (CTA)',agency:'NRCS',cat:'federal-ag',award:'Free service',match:'None',best:'Planning and assessment — free help before applying for other programs',criteria:'Free for grazing permit holders, farming permit holders, and tribal chapters.',examples:['Rangeland assessment','Erosion control designs','Irrigation designs','Conservation plans','Soil testing']},
+  RCPP:{name:'Regional Conservation Partnership Program (RCPP)',agency:'NRCS',cat:'federal-ag',award:'Varies; Colorado River Basin eligible for 50% of RCPP funding',match:'Varies; tribes can manage funding and implementation directly (RCPP AFA)',best:'Large, landscape-scale multi-partner projects',criteria:'Standard NRCS contracts. RCPP AFA (Alternative Funding Arrangements) allow tribe to manage directly.',examples:['Water infrastructure upgrades','Chapter watering stations','Large-scale fencing','Climate-smart cattle certifications']},
+  PL566:{name:'Watershed Protection and Flood Prevention (PL-566)',agency:'NRCS',cat:'federal-ag',award:'100% for design/planning; 100% for flood prevention; 50% for other purposes',match:'None for flood prevention; 50% for other purposes',best:'Watershed-scale projects protecting communities and farmland',criteria:'Watershed must be under 250,000 acres. Must provide public benefits. Watershed plan required before construction.',examples:['Check dams and one-rock dams','Native vegetation reintroduction','Physical protection around wells','Spread and soak structures']},
+  WEEG:{name:'Water and Energy Efficiency Grants (WEEG)',agency:'Bureau of Reclamation',cat:'drought',award:'Up to $3 million per project',match:'50/50; ISDEAA funds can often count as match',best:'Water conservation and efficiency — canals, pumps, and smart water systems',criteria:'Must have water or power delivery authority. Must include quantifiable water savings.',examples:['Canal lining and piping','SCADA / automated water management','Water metering','Pump upgrades','Solar power for water systems']},
+  EWRP:{name:'Environmental Water Resources Projects (EWRP)',agency:'Bureau of Reclamation',cat:'drought',award:'Up to $3 million; up to 75% federal share for collaborative projects',match:'35% non-federal',best:'Ecological restoration linked to water resources',criteria:'Must have clear connection to a water resource the applicant manages. Multi-stakeholder process required.',examples:['River channel restoration','Floodplain reconnection','Bank stabilization','Check dams','Fish passage improvements']},
+  SWEP:{name:'Small-scale Water Efficiency Projects (SWEP)',agency:'Bureau of Reclamation',cat:'drought',award:'Up to $100,000 (total project ~$200k–$250k)',match:'50% non-federal; in-kind tribal labor often covers much of this',best:'Quick, shovel-ready water efficiency fixes — good starting point',criteria:'Must be shovel-ready and completed within 2 years. Should be in a prior planning document.',examples:['Solar-powered livestock wells','Canal lining','SCADA for water tanks or wells','Flow meters','Headgate automation']},
+  CWMP:{name:'Cooperative Watershed Management Program (CWMP)',agency:'Bureau of Reclamation',cat:'drought',award:'Phase I (planning): up to $200,000 — 100% federal. Phase II (construction): 50% match',match:'Phase I: None. Phase II: 50%',best:'Watershed group planning (Phase I) and on-the-ground restoration (Phase II)',criteria:'Phase I: diverse stakeholder group required. Phase II: must have Bureau-approved watershed restoration plan.',examples:['Watershed group formation','Restoration planning','Invasive species removal','Fish passage','Stream channel work']},
+  AERP:{name:'Aquatic Ecosystem Restoration Projects (AERP)',agency:'Bureau of Reclamation',cat:'drought',award:'Study/design up to $2M; construction up to $10M; minimum ~$500,000',match:'35% non-federal',best:'Large-scale river and aquatic habitat restoration',criteria:'Must benefit fish, wildlife, or aquatic habitat. Priority for fixing damage from past Bureau infrastructure.',examples:['Dam removal','Fish bypass construction','Floodplain reconnection','Riparian revegetation','Sediment control']},
+  TribalDomestic:{name:'Tribal Domestic Water Supplies Program',agency:'Bureau of Reclamation',cat:'drought',award:'Backed by $550M IRA appropriation through 2031',match:'Varies',best:'New domestic water infrastructure for communities without reliable drinking water',criteria:'Federally recognized tribes only. Must be for human use — not irrigation or commercial-only. Priority for disadvantaged communities.',examples:['Water treatment plants and storage tanks','Aging pipe and pump replacement','Engineering studies and NEPA compliance','Water lines to community buildings']},
+  TAP:{name:'Native American Affairs Technical Assistance Program (TAP)',agency:'Bureau of Reclamation',cat:'drought',award:'Up to ~$1M per project; $7M–$10M nationally each year',match:'None typically',best:'Technical studies and feasibility work before applying for construction grants',criteria:'Federally recognized tribes only. Cannot fund large-scale construction, litigation, or purchasing water rights.',examples:['Water quality assessments and flow measurements','Preliminary engineering reports (PERs)','Tribal Water Codes and drought plans','Staff training in water management and GIS','Condition evaluations of dams, canals, and wells']},
+  WMPPD:{name:'Water Management, Planning, and Pre-Development (WMPPD)',agency:'Bureau of Indian Affairs',cat:'tribal-water',award:'Varies by scope; partially funded based on BIA yearly budget',match:'Usually none',best:'Water planning, assessments, and pre-development studies for tribal programs',criteria:'Federally recognized tribes. Must produce a definable product — a report, data set, or completed management plan.',examples:['Reservation-wide water use strategies','Surface and groundwater assessments','Stream flow and aquifer monitoring equipment','Soil salinity studies','Tribal staff training in water law and GIS']},
+  TPA:{name:'Tribal Priority Allocations (TPA)',agency:'Bureau of Indian Affairs',cat:'tribal-water',award:'$461M total FY2026 — formula-based, not competitive',match:'None (recurring)',best:'Day-to-day management of tribal water resources',criteria:'Federally recognized tribes under P.L. 93-638 contract or Self-Governance Compact.',examples:['Windmill repair','Community well sampling','Irrigation repairs','Water quality monitoring','Stream gauge operation']},
+  FarmGarden:{name:'Farm and Garden Incentive Program (NNDA)',agency:'Navajo Nation Dept. of Agriculture',cat:'tribal-water',award:'~$500 for gardeners; ~$1,000 for ALUP holders',match:'None',best:'Small-scale Navajo farm and garden water improvements',criteria:'Enrolled Navajo Nation member with valid ALUP, grazing permit, or recognized dryland farmer/gardener.',examples:['Small-scale irrigation and water tanks','Seed and soil amendments','Invasive weed management','Erosion control measures']},
+  AIFLivestock:{name:'AIF Livestock Incentive Program',agency:'Navajo Nation Dept. of Agriculture',cat:'tribal-water',award:'~$1,000–$2,000 per permitted rancher',match:'None',best:'Navajo ranchers practicing best management and managing livestock to carrying capacity',criteria:'Enrolled Navajo Nation member with valid current grazing permit.',examples:['Troughs, solar wells, water hauling equipment','Native grass reseeding','Fencing to defer grazing']},
+  TCR:{name:'Tribal Climate Resilience Grants (TCR)',agency:'Bureau of Indian Affairs',cat:'tribal-water',award:'Up to $250,000 planning; up to $4,000,000 implementation; up to $600,000 RMP staff',match:'None — 100% federal',best:'Climate adaptation planning and climate-resilient infrastructure',criteria:'Federally recognized tribes. Must address climate risks to tribal treaty/trust resources, economies, infrastructure, or human health.',examples:['Tribal Climate Adaptation Plans','Vulnerability assessments for water resources','Climate-resilient community infrastructure','Regenerative agriculture']},
+  Youth:{name:'Tribal Youth Initiative Program',agency:'Bureau of Indian Affairs',cat:'tribal-water',award:'$2,000–$50,000 per application',match:'None required',best:'Hands-on conservation work with tribal youth (up to age 26)',criteria:'Federally recognized tribes. Must target tribal youth specifically. Must be signed by Director of Natural Resources.',examples:['Habitat surveys for native species','Tamarisk and Russian olive removal','Traditional land management documentation with elders','Stream monitoring']},
+  Invasive:{name:'Invasive Species Program',agency:'Bureau of Indian Affairs',cat:'tribal-water',award:'$2,500–$200,000 per application',match:'No formal match; cost-sharing helps ranking',best:'Managing invasive species threatening tribal trust resources',criteria:'Federally recognized tribes. Must be on tribal trust or allotted lands. Director of Natural Resources signature required.',examples:['Invasive species management plan','Tamarisk removal along riverbanks','Wild horse removal from damaged rangeland']},
+  WIFA:{name:'Water Infrastructure Finance Authority — AZ (WIFA)',agency:'Independent state authority (Arizona)',cat:'state',award:'$300M–$500M available; $1M set aside for Navajo/Apache county communities',match:'25% non-state match; often waivable for disadvantaged communities',best:'Large water/wastewater infrastructure in Arizona tribal communities',criteria:'Disadvantaged community status can lead to 100% principal forgiveness. Preliminary Engineering Report typically required.',examples:['Treatment plants, storage tanks, aging pipe replacement','New water source development','Smart meter installations','Monsoon runoff capture basins']},
+  WRI:{name:"Utah's Watershed Restoration Initiative (WRI)",agency:'Utah Dept. of Natural Resources',cat:'state',award:'Up to $1M per proposal per year ($35M–$42M total pool)',match:'50%+ partner funding scores much higher; tribal staff time accepted',best:'Watershed restoration in the Utah portion of the watershed',criteria:'Federally recognized tribes. 2026 priorities: water quality/quantity, species conservation, and wildfire risk reduction.',examples:['Beaver dam analogs (BDAs)','Floodplain reconnection','Native willow and cottonwood planting','Tamarisk and Russian olive removal','Post-fire reseeding']},
+  GIP:{name:'Utah Grazing Improvement Program (GIP)',agency:'Utah Dept. of Agriculture and Food',cat:'state',award:'Up to $200,000 (general); up to $10,000 (small operators ≤75 AUs)',match:'50/50; match can include in-kind labor, equipment, or tribal AIF funds',best:'Grazing improvement and rangeland health for Utah livestock producers',criteria:'Open to all Utah livestock operations. Cannot fund routine maintenance.',examples:['Solar pump livestock wells','Cross-fencing for rotational grazing','Pinyon-juniper thinning','Native seeding after wildfire']},
+  EPA319:{name:'Tribal Clean Water Act Section 319',agency:'EPA',cat:'water-quality',award:'~$70,000 base + up to ~$125,000 for project grants',match:'Varies',best:'Nonpoint source pollution — erosion, road runoff, livestock impacts to streams',criteria:"Nine-element watershed plan required. Tribe must have EPA Treatment as State (TAS) status for Section 319 (Navajo has had TAS since 2006).",examples:['Exclusion fencing to keep cattle from streams','Off-stream watering systems','Native vegetation along stream banks','Road drainage improvements','Watershed plan development']},
+  CWISA:{name:'Clean Water Indian Set-Aside (CWISA)',agency:'EPA',cat:'water-quality',award:'~$89M national in FY2025 — 100% grant, no repayment',match:'None',best:'Wastewater treatment plants and community sanitation infrastructure',criteria:'Federally recognized tribes. Project must be listed in IHS Sanitation Deficiency System (SDS) database. Ranked by deficiency level.',examples:['New or upgraded wastewater treatment plants','Sewer collection systems','Septic replacement with community sewer','Green infrastructure for stormwater','PFAS treatment']},
+  DWIGTSA:{name:'Drinking Water Infrastructure Grant — Tribal Set-Aside (DWIG-TSA)',agency:'EPA',cat:'water-quality',award:'~$22.5M per year across 10 EPA Regions; extra funds for lead lines and PFAS',match:'None typically for tribal projects',best:'Improving public drinking water systems serving tribes',criteria:'Federally recognized tribes. Must be a Public Water System (PWS). Must demonstrate long-term capacity to maintain infrastructure.',examples:['Arsenic, uranium, and nitrate treatment systems','New or rehabilitated wells','Water storage tank construction','Lead service line replacement','Operator training and certification']},
+  GAP:{name:'Indian Environmental General Assistance Program (GAP)',agency:'EPA',cat:'water-quality',award:'~$110,000–$184,000 per year',match:'None',best:'Building tribal environmental program capacity — staff, monitoring, and planning',criteria:'Federally recognized tribes. Must have or be developing an EPA-Tribal Environmental Plan (ETEP).',examples:['Water quality surveys','Tribal member workshops','Adaptation plans and vulnerability assessments','Staff capacity building']},
+  SUDS:{name:'Small, Underserved and Disadvantaged Communities Grant (SU/DS)',agency:'EPA',cat:'water-quality',award:'$25M–$35M tribal allotment nationally',match:'Up to 45%; often fully waived for tribal communities',best:'Drinking water access for vulnerable and disadvantaged communities',criteria:'Federally recognized tribes (10% tribal set-aside). Must be underserved (lacks household water or violates MCLs) OR small (<10,000 people) and financially disadvantaged.',examples:['Water line extensions for homes on contaminated wells','Point-of-use filters while permanent fix is planned','Residential water testing','Quick-strike projects for water quality violations']},
+  CWA106:{name:'Tribal Clean Water Act Section 106 Grants',agency:'EPA',cat:'water-quality',award:'~$65,000–$900,000 per year',match:'None typically',best:'Tribal water quality monitoring programs and water quality standards',criteria:'Federally recognized tribes with Treatment as State (TAS) status. Must submit annual tribal assessment report.',examples:['River, lake, and groundwater sampling','Water quality specialist salaries','Tribal water quality standards development','Tribal assessment reports (TAR)']}
+};
+
+const CATS = [
+  {id:'federal-ag',label:'Federal Agricultural Programs (NRCS)',keys:['EQIP','AMA','CSP','CTA','RCPP','PL566']},
+  {id:'drought',label:'Drought Resilience & Water Efficiency (Bureau of Reclamation)',keys:['WEEG','EWRP','SWEP','CWMP','AERP','TribalDomestic','TAP']},
+  {id:'tribal-water',label:'Tribal Water Programs (BIA & Navajo Nation)',keys:['WMPPD','TPA','FarmGarden','AIFLivestock','TCR','Youth','Invasive']},
+  {id:'state',label:'State Land and Water Agencies',keys:['WIFA','WRI','GIP']},
+  {id:'water-quality',label:'Tribal Water Quality & Pollution Control (EPA)',keys:['EPA319','CWISA','DWIGTSA','GAP','SUDS','CWA106']}
+];
+
+const FINDER_MAP = {
+  'solar-well':{best:['EQIP','SWEP','GIP'],other:['AMA','AIFLivestock','WEEG']},
+  'livestock-trough':{best:['EQIP','SWEP','GIP'],other:['AIFLivestock','AMA']},
+  'cross-fence':{best:['EQIP','GIP'],other:['CSP','RCPP']},
+  'range-plan':{best:['CTA','WMPPD'],other:['CSP','TAP','TCR']},
+  'erosion':{best:['EPA319','WRI'],other:['EWRP','RCPP','PL566']},
+  'check-dam':{best:['EPA319'],other:['WRI','PL566']},
+  'road-drain':{best:['EPA319','WRI'],other:['PL566']},
+  'riparian':{best:['EPA319','EWRP','AERP'],other:['WRI','Invasive']},
+  'invasive':{best:['Invasive','EQIP'],other:['EWRP','Youth']},
+  'water-line':{best:['DWIGTSA','SUDS','TribalDomestic'],other:['WIFA','EWRP']},
+  'arsenic-uranium':{best:['DWIGTSA','SUDS'],other:['TribalDomestic','GAP']},
+  'septic':{best:['CWISA','SUDS'],other:['DWIGTSA']},
+  'wastewater-plant':{best:['CWISA'],other:['DWIGTSA']},
+  'canal-lining':{best:['WEEG'],other:['EQIP']},
+  'drip-irrigation':{best:['EQIP'],other:['AMA','WEEG']},
+  'water-monitoring':{best:['CWA106','TAP'],other:['GAP','WMPPD']},
+  'feasibility':{best:['TAP','WMPPD'],other:['GAP']},
+  'watershed-plan':{best:['CWMP','EPA319'],other:['WMPPD','GAP']},
+  'climate-plan':{best:['TCR'],other:['TAP','GAP']},
+  'capacity':{best:['GAP','CWA106','EPA319'],other:['WMPPD','TCR','TAP']}
+};
+
+const BARRIER_BOOST = {
+  staff:['GAP','CWA106','TCR','WMPPD','TAP','EPA319'],
+  planning:['TAP','WMPPD','CTA','GAP','CWMP'],
+  match:['TCR','Youth','Invasive','CWISA','DWIGTSA','SUDS','GAP'],
+  construction:['EQIP','WEEG','AERP','CWISA','DWIGTSA','TribalDomestic','WRI','RCPP']
+};
+
+const TYPE_FUNDING = {
+  irrigation:['WEEG','EQIP','SWEP','AMA'],
+  culinary:['DWIGTSA','SUDS','TribalDomestic','TAP','GAP'],
+  quality:['EPA319','CWA106','DWIGTSA','SUDS','GAP'],
+  livestock:['EQIP','SWEP','GIP','AIFLivestock','CTA'],
+  erosion:['EPA319','WRI','EWRP','PL566'],
+  riparian:['EWRP','AERP','WRI','EPA319','Invasive'],
+  flood:['PL566','WRI','EPA319','EWRP'],
+  community:['GAP','TCR','WMPPD','CWA106','TAP']
+};
+
+const CW_DATA = [
+  {cat:'livestock',type:'Solar-powered wells / pumps',best:['EQIP','SWEP','GIP'],other:['AMA','FarmGarden','AIFLivestock'],notes:'Start with one well and one grazing unit. Use free CTA planning to design it, then GIP or SWEP to help cover the cost.'},
+  {cat:'livestock',type:'Livestock watering troughs',best:['EQIP','SWEP','GIP'],other:['AIFLivestock','AMA'],notes:'Tie troughs to grazing management improvements (rotation, off-stream water) to score higher in competitive programs.'},
+  {cat:'livestock',type:'Cross-fencing / rotational grazing',best:['EQIP','GIP'],other:['CSP','RCPP'],notes:'Get grazing permittee buy-in early. Show how fencing protects water quality in addition to improving grazing.'},
+  {cat:'livestock',type:'Rangeland assessment and planning',best:['CTA','WMPPD'],other:['CSP','TAP','TCR'],notes:'Free CTA planning unlocks EQIP, GIP, and restoration funding later. Start here before applying for construction programs.'},
+  {cat:'erosion',type:'Erosion control / stream stabilization',best:['EPA319','WRI'],other:['EWRP','RCPP','PL566'],notes:'Pick one reach or road crossing first. Show how it reduces sediment going into the San Juan River.'},
+  {cat:'erosion',type:'Check dams / sediment control',best:['EPA319'],other:['WRI','PL566'],notes:'Start with a short demonstration stretch and take good before/after photos to build support.'},
+  {cat:'erosion',type:'Road / drainage improvements',best:['EPA319','WRI'],other:['PL566'],notes:'Clarify who owns the road (chapter, county, BIA). Pair road work with wash stabilization and riparian planting.'},
+  {cat:'riparian',type:'Riparian restoration',best:['EPA319','EWRP','AERP'],other:['WRI','Invasive'],notes:'Combine invasive removal, planting, and grazing management. Link habitat, water quality, and cultural benefits together.'},
+  {cat:'riparian',type:'Native vegetation planting',best:['EQIP','WRI'],other:['EPA319','RCPP'],notes:'Tie planting to grazing changes or erosion fixes so vegetation survives and funders see multiple benefits.'},
+  {cat:'riparian',type:'Invasive species removal',best:['Invasive','EQIP'],other:['EWRP','Youth'],notes:'Pair removal with replanting and youth engagement. Projects with partnerships score higher.'},
+  {cat:'water',type:'Water line extensions',best:['DWIGTSA','SUDS','TribalDomestic'],other:['WIFA'],notes:'Map homes, existing lines, and hauling points. Emphasize health risks and the cost and difficulty of hauling water.'},
+  {cat:'water',type:'Water treatment (arsenic / uranium)',best:['DWIGTSA','SUDS'],other:['TribalDomestic','GAP'],notes:'Protect people first — get strong water quality data and map affected homes before you choose between line extensions and point-of-use treatment.'},
+  {cat:'water',type:'Septic system replacement',best:['CWISA','SUDS'],other:['DWIGTSA'],notes:'Document health risks and number of homes with failing systems. Show how fixing septic protects wells or nearby washes.'},
+  {cat:'water',type:'Wastewater treatment plants',best:['CWISA'],other:['DWIGTSA'],notes:'Coordinate early with tribal utility and NNEPA. Expect a multi-year planning and construction timeline.'},
+  {cat:'irrigation',type:'Canal / ditch lining',best:['WEEG'],other:['EQIP'],notes:'Document current water losses and the number of irrigators served. Highlight water savings and reliability.'},
+  {cat:'irrigation',type:'Pump upgrades',best:['WEEG'],other:[],notes:'Emphasize reduced outages, energy savings, and improved reliability for homes or irrigators.'},
+  {cat:'irrigation',type:'Drip irrigation',best:['EQIP'],other:['AMA','WEEG'],notes:'Highlight water savings and soil health. Small producers can combine with Farm & Garden incentives.'},
+  {cat:'planning',type:'Water quality monitoring',best:['CWA106','TAP'],other:['GAP','WMPPD'],notes:'Monitoring data collected now will strengthen future construction grant applications.'},
+  {cat:'planning',type:'Feasibility studies',best:['TAP','WMPPD'],other:['GAP'],notes:'Use to choose between options — line extension, new well, etc. — before applying for construction money.'},
+  {cat:'planning',type:'Watershed planning',best:['CWMP','EPA319'],other:['WMPPD','GAP'],notes:'Build a diverse watershed group and a clear priority list. This unlocks larger construction grants later.'},
+  {cat:'planning',type:'Climate adaptation plans',best:['TCR'],other:['TAP','GAP'],notes:'Tie climate risks (drought, flooding, extreme heat) to specific water, grazing, and road problems in the watershed.'},
+  {cat:'planning',type:'Hiring staff or a coordinator',best:['GAP','CWA106','EPA319'],other:['WMPPD','TCR','TAP'],notes:'Apply by explaining: "Many needs are already known, but there is not enough staff time to turn them into competitive applications."'}
+];
+
+const PAGES = ['start','before','pathway','finder','directory','crosswalk','worksheet'];
+const LABELS = ['Let\'s Get Started','Before You Apply','Your Pathway','Find Funding','Funding Directory','Program Matcher','My Worksheet'];
+
+function goTo(id) {
+  PAGES.forEach(p => { document.getElementById('page-' + p).classList.toggle('active', p === id); });
+  const idx = PAGES.indexOf(id);
+  document.getElementById('progress-label').textContent = `Step ${idx+1} of 7 — ${LABELS[idx]}`;
+  document.querySelectorAll('.dot').forEach((dot, i) => { dot.classList.toggle('active', PAGES[i] === id); dot.classList.toggle('done', i < idx); });
+  for (let i = 1; i <= 6; i++) { const line = document.getElementById('line-' + i); if (line) line.classList.toggle('done', i <= idx); }
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+let openCheck = null;
+const doneBya = new Set();
+function toggleCheck(letter) {
+  const step = document.getElementById('cs-' + letter);
+  if (openCheck === letter) { step.classList.remove('open'); openCheck = null; }
+  else { if (openCheck) document.getElementById('cs-' + openCheck).classList.remove('open'); step.classList.add('open'); openCheck = letter; }
+}
+function markDone(letter) {
+  doneBya.add(letter);
+  const step = document.getElementById('cs-' + letter);
+  step.classList.add('done'); step.classList.remove('open'); openCheck = null;
+  if (doneBya.size === 6) document.getElementById('bya-done-msg').style.display = 'block';
+}
+
+const ENG = {
+  chapter_start:{name:'Chapter House(s)',detail:'Confirm community support and initiate local process with Chapter leadership and Grazing officials.'},
+  nn_programs:{name:'Navajo Nation Programs',detail:'Engage Water Resources, Agriculture, and Natural Resources divisions to assess tribal permitting requirements.'},
+  nn_commission:{name:'Navajo Utah Commission',detail:'Confirm alignment with Utah-based priorities and identify any Resource and Development Committee involvement needed.'},
+  ute_tribe:{name:'Ute Mountain Ute Tribe',detail:'Engage Tribal Council, Natural Resources, and Cultural Resources for land use and cultural review.'},
+  san_juan_county:{name:'San Juan County',detail:'Confirm county land involvement and any county permitting or economic development engagement needed.'},
+  utah_water_rights:{name:'Utah Division of Water Rights',detail:'Initiate water rights review for any Utah-jurisdiction components of the project.'},
+  utah_deq:{name:'Utah Dept. of Environmental Quality',detail:'Initiate water quality permitting, discharge review, or environmental compliance.'},
+  bia:{name:'Bureau of Indian Affairs',detail:'Confirm federal trust land implications, NEPA requirements, and BIA program funding opportunities.'},
+  blm_usfs:{name:'BLM / U.S. Forest Service',detail:'Obtain right-of-way permits and environmental clearances for federal land crossings.'},
+  bureau_rec:{name:'Bureau of Reclamation',detail:'Identify water delivery or infrastructure programs (WEEG, SWEP, TAP, Tribal Domestic Water) and funding opportunities.'},
+  nrcs:{name:'Natural Resource Conservation Service (NRCS)',detail:'Assess eligibility for EQIP, CTA, CSP, RCPP, or PL-566. Request free Conservation Technical Assistance (CTA) as a first step.'},
+  municipal:{name:'Municipality',detail:'Confirm municipal permits, utility coordination, and any local development agreements needed.'},
+  nonprofits:{name:'Nonprofit Partners',detail:'Identify technical support or gap-filling funding from aligned organizations.'}
+};
+
+let landSelected = new Set();
+function toggleLand(btn) {
+  const val = btn.dataset.val;
+  if (landSelected.has(val)) { landSelected.delete(val); btn.classList.remove('on'); }
+  else { landSelected.add(val); btn.classList.add('on'); }
+}
+
+function buildPathway() {
+  const type = document.getElementById('proj-type').value;
+  const loc = document.getElementById('proj-location').value;
+  const water = document.getElementById('proj-water').value;
+  if (!type || !loc) { alert('Please pick a project type and location.'); return; }
+  const isNavajo = ['aneth','mexican-water','navajo-mountain','oljato','red-mesa','teec-nos-pos','sweetwater'].includes(loc);
+  const isUte = loc === 'white-mesa';
+  const isMuni = ['bluff','blanding','monticello','la-sal'].includes(loc);
+  const seq = [];
+  const add = k => { if (!seq.find(s => s.name === ENG[k].name)) seq.push({...ENG[k]}); };
+  if (isNavajo) { add('chapter_start'); add('nn_programs'); add('nn_commission'); }
+  else if (isUte) add('ute_tribe');
+  else if (isMuni) add('municipal');
+  if (landSelected.has('navajo') && !isNavajo) { add('chapter_start'); add('nn_programs'); add('nn_commission'); }
+  if (landSelected.has('ute') && !isUte) add('ute_tribe');
+  if (landSelected.has('county') || landSelected.has('state')) add('san_juan_county');
+  if (water === 'yes-divert') add('utah_water_rights');
+  if (water === 'yes-quality') add('utah_deq');
+  if (landSelected.has('navajo') || landSelected.has('ute') || isNavajo || isUte) add('bia');
+  if (landSelected.has('federal')) add('blm_usfs');
+  if (['irrigation','culinary','livestock'].includes(type) || water === 'yes-divert') add('bureau_rec');
+  if (['irrigation','livestock','erosion','riparian','community'].includes(type)) add('nrcs');
+  add('nonprofits');
+  seq.forEach((s,i) => s.num = i + 1);
+  const locText = document.getElementById('proj-location').options[document.getElementById('proj-location').selectedIndex].text;
+  document.getElementById('result-title').textContent = 'Your Contact List';
+  document.getElementById('result-sub').textContent = `${locText} · ${seq.length} steps · Work through these in order`;
+  document.getElementById('step-list').innerHTML = seq.map(s => `<li class="step-item"><div class="step-circle">${s.num}</div><div class="step-text"><strong>${s.name}</strong><span>${s.detail}</span></div></li>`).join('');
+  const fkeys = TYPE_FUNDING[type] || [];
+  if (fkeys.length > 0) {
+    document.getElementById('pathway-funding-pills').innerHTML = fkeys.map(k => `<button class="funding-pill" onclick="showPathwayProg('${k}',this)">${k}</button>`).join('');
+    document.getElementById('pathway-funding-box').style.display = 'block';
+  }
+  document.getElementById('pathway-result').style.display = 'block';
+  document.getElementById('pathway-result').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function showPathwayProg(key, btn) {
+  document.querySelectorAll('.funding-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const p = P[key]; if (!p) return;
+  document.getElementById('ppop-name').textContent = p.name;
+  document.getElementById('ppop-agency').textContent = p.agency;
+  document.getElementById('ppop-award').textContent = p.award;
+  document.getElementById('ppop-match').textContent = p.match;
+  document.getElementById('ppop-best').textContent = p.best;
+  document.getElementById('ppop-examples').innerHTML = p.examples.map(e => `<span class="ex-pill">${e}</span>`).join('');
+  document.getElementById('ppop-dir-btn').onclick = () => jumpToProgram(key);
+  document.getElementById('pathway-prog-popup').classList.add('open');
+}
+
+function resetPathway() {
+  document.getElementById('proj-type').value = '';
+  document.getElementById('proj-location').value = '';
+  document.getElementById('proj-water').value = '';
+  document.querySelectorAll('#land-chips .toggle-chip').forEach(b => b.classList.remove('on'));
+  landSelected.clear();
+  document.getElementById('pathway-result').style.display = 'none';
+  document.getElementById('pathway-funding-box').style.display = 'none';
+}
+
+let activeFinderKey = null;
+function runFinder() {
+  const type = document.getElementById('finder-type').value;
+  const barrier = document.getElementById('finder-barrier').value;
+  if (!type) { document.getElementById('finder-results').classList.remove('open'); return; }
+  const map = FINDER_MAP[type] || {best:[],other:[]};
+  let all = [...map.best.map(k=>({k,tier:'Best fit'})), ...map.other.map(k=>({k,tier:'Also consider'}))];
+  if (barrier && BARRIER_BOOST[barrier]) { const b = BARRIER_BOOST[barrier]; all.sort((a,z) => (b.includes(a.k)?0:1) - (b.includes(z.k)?0:1)); }
+  document.getElementById('finder-list').innerHTML = all.map(({k,tier}) => {
+    const prog = P[k]; if (!prog) return '';
+    const boosted = barrier && BARRIER_BOOST[barrier] && BARRIER_BOOST[barrier].includes(k);
+    return `<div class="finder-card" onclick="showFinderDetail('${k}')"><div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:6px"><div class="fc-name">${prog.name}</div><div style="display:flex;gap:5px;flex-shrink:0"><span class="fc-tag ${tier==='Best fit'?'fc-best':'fc-other'}">${tier}</span>${boosted?'<span class="fc-tag fc-boost">↑ Fits your barrier</span>':''}</div></div><div class="fc-agency">${prog.agency}</div><div class="fc-tags"><span class="fc-tag fc-award">💰 ${prog.award.substring(0,50)}${prog.award.length>50?'…':''}</span></div></div>`;
+  }).join('');
+  document.getElementById('finder-detail').style.display = 'none';
+  document.getElementById('finder-results').classList.add('open');
+}
+
+function showFinderDetail(key) {
+  const prog = P[key]; if (!prog) return;
+  activeFinderKey = key;
+  document.getElementById('fd-name').textContent = prog.name;
+  document.getElementById('fd-agency').textContent = prog.agency;
+  document.getElementById('fd-award').textContent = prog.award;
+  document.getElementById('fd-match').textContent = prog.match;
+  document.getElementById('fd-best').textContent = prog.best;
+  document.getElementById('fd-criteria').textContent = prog.criteria;
+  document.getElementById('fd-examples').innerHTML = prog.examples.map(e => `<span class="ex-pill">${e}</span>`).join('');
+  document.getElementById('fd-dir-btn').onclick = () => jumpToProgram(key);
+  document.getElementById('finder-detail').style.display = 'block';
+  document.getElementById('finder-detail').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function buildDirectory() {
+  const el = document.getElementById('dir-content');
+  el.innerHTML = CATS.map(cat =>
+    `<div class="dir-cat" data-cat="${cat.id}"><div class="dir-cat-title">${cat.label}</div>${cat.keys.map(key => {
+      const p = P[key]; if (!p) return '';
+      return `<div><button class="prog-btn" id="pbtn-${key}" onclick="toggleProg('${key}')"><div class="prog-btn-name">${p.name}</div><div class="prog-btn-agency">${p.agency}</div><div class="prog-btn-award">💰 ${p.award.substring(0,60)}${p.award.length>60?'…':''} &nbsp;·&nbsp; Tap to expand</div></button><div class="prog-expand" id="pexp-${key}"><div class="pe-row"><div class="pe-label">Best for</div><div class="pe-val">${p.best}</div></div><div class="pe-row"><div class="pe-label">Funding</div><div class="pe-val">${p.award}</div></div><div class="pe-row"><div class="pe-label">Match</div><div class="pe-val">${p.match}</div></div><div class="pe-row"><div class="pe-label">Eligibility</div><div class="pe-val">${p.criteria}</div></div><div class="pe-row"><div class="pe-label">Examples</div><div class="pe-val"><div class="ex-list">${p.examples.map(e=>`<span class="ex-pill">${e}</span>`).join('')}</div></div></div></div></div>`;
+    }).join('')}</div>`
+  ).join('');
+}
+
+function toggleProg(key) { document.getElementById('pexp-' + key).classList.toggle('open'); }
+
+function filterDir(cat, btn) {
+  document.querySelectorAll('.dir-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dir-cat').forEach(el => { el.classList.toggle('hidden-cat', cat !== 'all' && el.dataset.cat !== cat); });
+}
+
+function jumpToProgram(key) {
+  goTo('directory');
+  setTimeout(() => { const exp = document.getElementById('pexp-' + key); if (exp) { exp.classList.add('open'); exp.scrollIntoView({behavior:'smooth', block:'center'}); } }, 300);
+}
+
+function buildCrosswalk() {
+  const el = document.getElementById('cw-content');
+  el.innerHTML = CW_DATA.map((row, i) =>
+    `<div class="cw-item" data-cat="${row.cat}" id="cwi-${i}"><div class="cw-item-head" onclick="toggleCW(${i})"><div class="cw-item-name">${row.type}</div><div class="cw-item-arrow">▾</div></div><div class="cw-item-body"><p>${row.notes}</p><div style="margin-bottom:6px;font-size:12px;font-weight:700;color:var(--teal-bright);text-transform:uppercase;letter-spacing:.06em">Best fit</div><div class="cw-programs">${row.best.map(k=>`<span class="cw-best" onclick="jumpToProgram('${k}')" title="${P[k]?P[k].name:k}">${k}</span>`).join('')}</div>${row.other.length > 0 ? `<div style="margin:8px 0 4px;font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em">Also consider</div><div class="cw-programs">${row.other.map(k=>`<span class="cw-other" onclick="jumpToProgram('${k}')" title="${P[k]?P[k].name:k}">${k}</span>`).join('')}</div>` : ''}</div></div>`
+  ).join('');
+}
+
+let openCW = null;
+function toggleCW(i) {
+  const el = document.getElementById('cwi-' + i);
+  if (openCW === i) { el.classList.remove('open'); openCW = null; }
+  else { if (openCW !== null) document.getElementById('cwi-' + openCW).classList.remove('open'); el.classList.add('open'); openCW = i; }
+}
+
+function filterCW(cat, btn) {
+  document.querySelectorAll('#cw-filter .dir-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.cw-item').forEach(el => { el.classList.toggle('hidden-cat', cat !== 'all' && el.dataset.cat !== cat); });
+  if (openCW !== null) { document.getElementById('cwi-' + openCW).classList.remove('open'); openCW = null; }
+}
+
+function clearWS() {
+  document.querySelectorAll('#page-worksheet input[type=text], #page-worksheet textarea, #page-worksheet select').forEach(el => el.value = '');
+  document.querySelectorAll('#page-worksheet input[type=checkbox]').forEach(el => el.checked = false);
+}
+
+document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); });
+</script>
+</body>
 </html>
