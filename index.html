@@ -30,7 +30,7 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 112.5%; } /* 18px root — raise or lower this one number to scale all type */
+html { scroll-behavior: smooth; overflow-x: hidden; scroll-padding-top: calc(var(--topbar-h, 0px) + var(--nav-h, 0px) + 70px); font-size: 112.5%; } /* 18px root — raise or lower this one number to scale all type */
 body {
   font-family: 'Source Sans 3', sans-serif;
   background: var(--pale);
@@ -46,7 +46,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
   border-bottom: 3px solid var(--teal-bright);
+  position: sticky;
+  top: 0;
+  z-index: 200;
 }
 .topbar-left { display: flex; align-items: center; gap: 18px; }
 .topbar .dept { color: #e8f4fb; font-size: 14px; font-weight: 700; }
@@ -75,12 +80,39 @@ body {
   background: var(--navy-light);
   display: flex;
   align-items: stretch;
+  flex-wrap: wrap;
   border-bottom: 2px solid rgba(255,255,255,.08);
+  position: sticky;
+  top: var(--topbar-h, 0px);
+  z-index: 150;
 }
+/* hover tooltips on nav items — matches the plan pages */
+.nav-tip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s ease;
+  z-index: 200;
+}
+.nav-item:hover .nav-tip,
+.nav-item:focus-visible .nav-tip { opacity: 1; }
 .nav-item {
   display: flex;
   flex-direction: column;
-  padding: 11px 22px;
+  justify-content: center;
+  position: relative;
+  padding: 14px 22px;
   text-decoration: none;
   border-right: 1px solid rgba(255,255,255,.1);
   transition: background .15s;
@@ -88,9 +120,9 @@ body {
 .nav-item:hover { background: rgba(255,255,255,.08); }
 .nav-item.active { background: rgba(34,181,160,.18); border-bottom: 3px solid var(--teal-bright); }
 .nav-item .nm { color: #fff; font-size: 1rem; font-weight: 700; }
-.nav-item .ns { color: #9dc8de; font-size: 12px; margin-top: 2px; }
 .nav-spacer { flex: 1; }
-.nav-actions { display: flex; align-items: center; gap: 8px; padding: 0 20px; }
+.nav-actions { display: flex; align-items: center; gap: 8px; padding: 8px 20px;
+  flex-shrink: 0; margin-left: auto; flex-wrap: wrap; }
 .btn-nav-p {
   background: var(--teal);
   color: #fff;
@@ -127,7 +159,7 @@ body {
   background: var(--navy-mid);
   border-bottom: 2px solid rgba(255,255,255,.08);
   position: sticky;
-  top: 0;
+  top: calc(var(--topbar-h, 0px) + var(--nav-h, 0px));
   z-index: 100;
   padding: 14px 24px;
 }
@@ -744,6 +776,24 @@ footer strong { color: rgba(255,255,255,0.9); }
   .page { display: none !important; }
   #page-worksheet { display: block !important; }
 }
+
+/* ── WIDE SCREENS — matches the 1400px scale-up on the main plan pages ── */
+@media (min-width: 1400px) {
+  html { font-size: 125%; }              /* 20px root: scales every rem-based size */
+  .topbar .dept { font-size: 16px; }
+  .topbar .div { font-size: 14px; }
+  .topbar-tag { font-size: 13px; padding: 5px 14px; }
+  .nav-tip { font-size: 15px; }
+  .btn-nav-p { font-size: 17px; padding: 11px 22px; }
+  .btn-nav-o { font-size: 17px; padding: 10px 20px; }
+  .progress-label { font-size: 17px; }
+  .dot { width: 46px; height: 46px; font-size: 17px; }
+  .dot-line { width: 28px; }
+  .dot-tooltip { font-size: 16px; padding: 6px 11px; }
+  .section-label { font-size: 14px; }
+  .prog-label, .pe-label { font-size: 14px; }
+  .field label { font-size: 17px; }
+}
 </style>
 </head>
 <body>
@@ -774,23 +824,23 @@ footer strong { color: rgba(255,255,255,0.9); }
 <nav class="main-nav">
   <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/index.html" class="nav-item">
     <span class="nm">Home</span>
-    <span class="ns">Overview &amp; about</span>
+    <span class="nav-tip">Overview &amp; about</span>
   </a>
   <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/lsj_goals.html" class="nav-item">
     <span class="nm">Plan goals</span>
-    <span class="ns">Targets &amp; outcomes</span>
+    <span class="nav-tip">Targets &amp; outcomes</span>
   </a>
   <a href="https://christinemosborne.github.io/Lower-San-Juan-Experience-Builder-with-Maps-V1-In-Desktop/lsj_goal_panels.html" class="nav-item">
     <span class="nm">Goal explorer</span>
-    <span class="ns">Maps &amp; priorities</span>
+    <span class="nav-tip">Maps &amp; priorities</span>
   </a>
   <a href="https://utahdeq.maps.arcgis.com/apps/mapviewer/index.html?webmap=1e61dbab8ebc446da952a8bb4c6e6824" target="_blank" class="nav-item">
     <span class="nm">Spatial explorer ↗</span>
-    <span class="ns">Interactive maps</span>
+    <span class="nav-tip">Interactive maps</span>
   </a>
   <a href="#" class="nav-item active">
     <span class="nm">Project Funding Guide</span>
-    <span class="ns">Grants &amp; programs</span>
+    <span class="nav-tip">Grants &amp; programs</span>
   </a>
   <div class="nav-spacer"></div>
   <div class="nav-actions">
@@ -1415,6 +1465,27 @@ function clearWS() {
 }
 
 document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); });
+</script>
+
+<script>
+/* Keep the sticky step bar pinned just below the nav, whatever height it is. */
+(function () {
+  var topbar = document.querySelector('.topbar');
+  var nav = document.querySelector('.main-nav');
+  if (!nav) return;
+  function setHeights() {
+    var root = document.documentElement.style;
+    root.setProperty('--topbar-h', (topbar ? topbar.offsetHeight : 0) + 'px');
+    root.setProperty('--nav-h', nav.offsetHeight + 'px');
+  }
+  setHeights();
+  window.addEventListener('resize', setHeights);
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(setHeights);
+    ro.observe(nav);
+    if (topbar) ro.observe(topbar);
+  }
+})();
 </script>
 </body>
 </html>
