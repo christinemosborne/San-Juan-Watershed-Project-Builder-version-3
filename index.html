@@ -607,6 +607,41 @@ body {
 .fc-boost { background: var(--gold-light); color: var(--gold); }
 .fc-award { background: var(--teal-pale); color: var(--teal); }
 
+
+/* ── PRACTICE SCORES ── */
+.pr-panel { background: var(--white); border: 1.5px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
+.pr-panel h4 { font-family: 'Source Serif 4', serif; font-size: 1.02rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.pr-intro { font-size: 0.84rem; color: var(--muted); margin-bottom: 12px; }
+.pr-card { background: var(--sand); border: 1.5px solid var(--sand-dark); border-radius: 6px; padding: 12px 14px; margin-bottom: 8px; }
+.pr-card.added { border-color: var(--teal-bright); background: var(--teal-pale); }
+.pr-head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.pr-name { font-weight: 700; font-size: 0.92rem; color: var(--navy); }
+.pr-meta { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+.pr-meta b { color: var(--navy); font-weight: 700; }
+.pr-fit { -webkit-print-color-adjust: exact; print-color-adjust: exact; flex: none; font-size: 0.72rem; font-weight: 700; border-radius: 3px; padding: 2px 8px; white-space: nowrap; }
+.pr-fit.strong { background: var(--teal); color: white; }
+.pr-fit.good { background: var(--gold); color: white; }
+.pr-fit.some { background: var(--sand-dark); color: var(--navy); }
+.pr-foot { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.pr-more { font-size: 0.76rem; color: var(--muted); }
+.pr-more summary { cursor: pointer; }
+.pr-more div { margin-top: 4px; font-variant-numeric: tabular-nums; }
+.pr-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.76rem; color: var(--muted); margin-bottom: 10px; }
+.pr-add { font-family: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; border-radius: 4px; padding: 4px 10px; border: 1.5px solid var(--teal); background: white; color: var(--teal); }
+.pr-card.added .pr-add { background: var(--teal); color: white; }
+.pr-note { font-size: 0.78rem; color: var(--muted); margin-top: 8px; }
+.pr-note a, .field-hint a { color: var(--teal); font-weight: 700; }
+.pr-trad { display: inline-block; margin: 3px 0 1px; font-size: 0.72rem; font-weight: 700; color: var(--teal); background: var(--teal-pale); border-radius: 3px; padding: 1px 7px; }
+.pr-pick { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pr-pick select { flex: 1 1 260px; }
+.pr-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.86rem; }
+.pr-table th { text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); border-bottom: 2px solid var(--sand-dark); padding: 6px 6px; }
+.pr-table td { border-bottom: 1px solid var(--sand-dark); padding: 7px 6px; vertical-align: top; }
+.pr-table td.num, .pr-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.pr-remove { font-family: inherit; font-size: 0.75rem; border: 1px solid var(--sand-dark); background: white; border-radius: 4px; cursor: pointer; padding: 2px 8px; color: var(--muted); }
+.pr-empty { font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+@media print { .pr-remove, .pr-pick, .no-print { display: none !important; } }
+
 /* ── DIRECTORY ── */
 .dir-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
 .dir-filter-btn {
@@ -1085,9 +1120,10 @@ footer strong { color: rgba(255,255,255,0.9); }
     <div class="finder-box">
       <div class="finder-head"><h3>💰 Funding Finder</h3><p>Two questions. Ranked results. Tap any result to see details.</p></div>
       <div class="finder-body">
-        <div class="field"><label>What is your project or problem?</label><select id="finder-type" onchange="runFinder()"><option value="">— Pick one —</option><option value="solar-well">Solar-powered livestock well or pump</option><option value="livestock-trough">Livestock watering trough</option><option value="cross-fence">Cross-fencing or rotational grazing</option><option value="range-plan">Rangeland assessment or plan</option><option value="erosion">Erosion control or stream stabilization</option><option value="check-dam">Check dams or sediment control</option><option value="road-drain">Road or drainage improvement</option><option value="riparian">Riparian restoration</option><option value="invasive">Invasive species removal</option><option value="water-line">Drinking water line extension</option><option value="arsenic-uranium">Water treatment (arsenic or uranium)</option><option value="septic">Septic system replacement</option><option value="wastewater-plant">Wastewater treatment plant</option><option value="canal-lining">Canal or ditch lining</option><option value="drip-irrigation">Drip irrigation</option><option value="water-monitoring">Water quality monitoring</option><option value="feasibility">Feasibility study or engineering report</option><option value="watershed-plan">Watershed plan</option><option value="climate-plan">Climate adaptation plan</option><option value="capacity">Hiring staff or a coordinator</option></select></div>
+        <div class="field"><label>What is your project or problem?</label><select id="finder-type" onchange="runFinder()"><option value="">— Pick one —</option><option value="solar-well">Solar-powered livestock well or pump</option><option value="livestock-trough">Livestock watering trough</option><option value="cross-fence">Cross-fencing or rotational grazing</option><option value="range-plan">Rangeland assessment or plan</option><option value="erosion">Erosion control or stream stabilization</option><option value="check-dam">Check dams or sediment control</option><option value="road-drain">Road or drainage improvement</option><option value="riparian">Riparian restoration</option><option value="invasive">Invasive species removal</option><option value="pj">Pinyon-juniper management</option><option value="fuels">Fuels reduction or prescribed fire</option><option value="aspen">Aspen protection</option><option value="mine-site">Legacy mine site cleanup (uranium and metals)</option><option value="stormwater">Town or community stormwater</option><option value="water-line">Drinking water line extension</option><option value="arsenic-uranium">Water treatment (arsenic or uranium)</option><option value="septic">Septic system replacement</option><option value="wastewater-plant">Wastewater treatment plant</option><option value="canal-lining">Canal or ditch lining</option><option value="drip-irrigation">Drip irrigation</option><option value="water-monitoring">Water quality monitoring</option><option value="feasibility">Feasibility study or engineering report</option><option value="watershed-plan">Watershed plan</option><option value="climate-plan">Climate adaptation plan</option><option value="capacity">Hiring staff or a coordinator</option></select></div>
         <div class="field"><label>What is your biggest barrier right now? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><select id="finder-barrier" onchange="runFinder()"><option value="">— Optional —</option><option value="staff">We don't have enough staff time</option><option value="planning">We don't have a plan or study yet</option><option value="match">Match or cost-share is hard</option><option value="construction">We need construction money</option></select></div>
         <div class="finder-results" id="finder-results">
+          <div id="finder-practices"></div>
           <div style="font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:12px">Programs that fit your project:</div>
           <div id="finder-list"></div>
           <div id="finder-detail" style="display:none;background:var(--sand);border:1.5px solid var(--sand-dark);border-radius:6px;padding:16px;margin-top:12px">
@@ -1158,9 +1194,10 @@ footer strong { color: rgba(255,255,255,0.9); }
     <div class="ws-card"><h3>2. Describe your project in 2–3 sentences</h3><div class="field"><textarea id="ws-desc" rows="4" placeholder="What is the problem? Where is it? Who is affected? How big is it?&#10;&#10;Example: &quot;The livestock well in Grazing Unit 12 has been broken for 2 years. Cattle are crowding a spring that drains to the San Juan River and causing erosion. About 5 permittees and 200 head of cattle are affected.&quot;"></textarea><div class="field-hint">This description is what you'll share with agency staff when you call. Keep it short and specific.</div></div></div>
     <div class="ws-card"><h3>3. Location and land status</h3><div class="field"><label>What kind of land is involved? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Navajo Nation trust land</label><label class="ws-chk"><input type="checkbox"> Allotted land</label><label class="ws-chk"><input type="checkbox"> Private land</label><label class="ws-chk"><input type="checkbox"> Utah state land</label><label class="ws-chk"><input type="checkbox"> Federal land (BLM/USFS)</label><label class="ws-chk"><input type="checkbox"> San Juan County land</label></div></div><div class="field"><label>Does the project cross from one type of land to another?</label><select id="ws-cross"><option value="">— Select —</option><option>Yes</option><option>No</option></select></div><div class="field"><label>If yes, which ones does it cross?</label><input type="text" id="ws-cross-detail" placeholder="e.g., Navajo Nation land into Utah state land"></div></div>
     <div class="ws-card"><h3>4. What type of project is it?</h3><div class="field"><label>Check all that apply</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Drinking water or wastewater</label><label class="ws-chk"><input type="checkbox"> Irrigation or livestock water</label><label class="ws-chk"><input type="checkbox"> Grazing or rangeland</label><label class="ws-chk"><input type="checkbox"> Erosion or sediment</label><label class="ws-chk"><input type="checkbox"> Riparian or habitat</label><label class="ws-chk"><input type="checkbox"> Planning or monitoring</label></div></div></div>
-    <div class="ws-card"><h3>5. Approvals and existing plans</h3><div class="field"><label>What approvals do you need? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Chapter resolution</label><label class="ws-chk"><input type="checkbox"> Grazing committee resolution</label><label class="ws-chk"><input type="checkbox"> Grazing permittee consent</label><label class="ws-chk"><input type="checkbox"> Other (lease, right-of-way, etc.)</label></div></div><div class="field"><label>Do you have any existing plans or data? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Watershed or drought plan</label><label class="ws-chk"><input type="checkbox"> Conservation or range plan</label><label class="ws-chk"><input type="checkbox"> Engineering reports</label><label class="ws-chk"><input type="checkbox"> Water quality data</label><label class="ws-chk"><input type="checkbox"> None yet</label></div></div><div class="field"><label>Notes on plans or approvals</label><textarea id="ws-plans" rows="2"></textarea></div></div>
-    <div class="ws-card"><h3>6. Capacity and match</h3><div class="field"><label>Who will manage the grant (reports, invoices, agency communication)?</label><textarea id="ws-manager" rows="2"></textarea></div><div class="field"><label>What match can you provide? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Cash</label><label class="ws-chk"><input type="checkbox"> Staff time</label><label class="ws-chk"><input type="checkbox"> Equipment use</label><label class="ws-chk"><input type="checkbox"> Volunteer labor</label><label class="ws-chk"><input type="checkbox"> Tribal funds</label><label class="ws-chk"><input type="checkbox"> Partner funds</label></div></div></div>
-    <div class="ws-card"><h3>7. Programs I'm interested in</h3><div id="ws-prog-rows"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 1</label><input type="text" placeholder="e.g., EQIP"></div><div class="field" style="margin:0"><label>Agency</label><input type="text" placeholder="e.g., NRCS"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 2</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 3</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div></div><div class="field"><label>Tribal staff to contact</label><textarea id="ws-tribal" rows="2"></textarea></div><div class="field"><label>Agency staff to contact</label><textarea id="ws-agency" rows="2"></textarea></div><div class="question-box">📞 Questions to ask when you call:<br>"Does this program fit our situation?" &nbsp;·&nbsp;"What do we need to do first before we can apply?" &nbsp;·&nbsp;"Are there other programs that might be a better fit?"</div></div>
+    <div class="ws-card"><h3>5. Practices we're considering</h3><div class="field no-print"><label>Add a practice</label><div class="pr-pick"><select id="ws-practice-pick"><option value="">— Pick a practice —</option></select><button type="button" class="see-more-btn" style="margin:0" onclick="addPracticeFromPick()">Add</button></div><div class="field-hint">You can also add practices from the Funding Finder, which lists the best fits for each project type first. For how the fit ratings were built, see the <a href="practice-scores.html" target="_blank" rel="noopener">practice scoring page</a> or download <a href="practice-ratings.csv" download>all ratings (CSV)</a>.</div></div><div id="ws-practices"></div></div>
+    <div class="ws-card"><h3>6. Approvals and existing plans</h3><div class="field"><label>What approvals do you need? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Chapter resolution</label><label class="ws-chk"><input type="checkbox"> Grazing committee resolution</label><label class="ws-chk"><input type="checkbox"> Grazing permittee consent</label><label class="ws-chk"><input type="checkbox"> Other (lease, right-of-way, etc.)</label></div></div><div class="field"><label>Do you have any existing plans or data? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Watershed or drought plan</label><label class="ws-chk"><input type="checkbox"> Conservation or range plan</label><label class="ws-chk"><input type="checkbox"> Engineering reports</label><label class="ws-chk"><input type="checkbox"> Water quality data</label><label class="ws-chk"><input type="checkbox"> None yet</label></div></div><div class="field"><label>Notes on plans or approvals</label><textarea id="ws-plans" rows="2"></textarea></div></div>
+    <div class="ws-card"><h3>7. Capacity and match</h3><div class="field"><label>Who will manage the grant (reports, invoices, agency communication)?</label><textarea id="ws-manager" rows="2"></textarea></div><div class="field"><label>What match can you provide? (check all that apply)</label><div class="ws-checks"><label class="ws-chk"><input type="checkbox"> Cash</label><label class="ws-chk"><input type="checkbox"> Staff time</label><label class="ws-chk"><input type="checkbox"> Equipment use</label><label class="ws-chk"><input type="checkbox"> Volunteer labor</label><label class="ws-chk"><input type="checkbox"> Tribal funds</label><label class="ws-chk"><input type="checkbox"> Partner funds</label></div></div></div>
+    <div class="ws-card"><h3>8. Programs I'm interested in</h3><div id="ws-prog-rows"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 1</label><input type="text" placeholder="e.g., EQIP"></div><div class="field" style="margin:0"><label>Agency</label><input type="text" placeholder="e.g., NRCS"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 2</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px"><div class="field" style="margin:0"><label>Program 3</label><input type="text"></div><div class="field" style="margin:0"><label>Agency</label><input type="text"></div></div></div><div class="field"><label>Tribal staff to contact</label><textarea id="ws-tribal" rows="2"></textarea></div><div class="field"><label>Agency staff to contact</label><textarea id="ws-agency" rows="2"></textarea></div><div class="question-box">📞 Questions to ask when you call:<br>"Does this program fit our situation?" &nbsp;·&nbsp;"What do we need to do first before we can apply?" &nbsp;·&nbsp;"Are there other programs that might be a better fit?"</div></div>
     <div class="btn-row"><button class="big-btn" onclick="window.print()">🖨️ Print My Worksheet</button><button class="big-btn teal" onclick="goTo('finder')">← Go Back to Funding Finder</button><button class="big-btn secondary" onclick="clearWS()">Clear All Fields</button></div>
   </div>
 </div>
@@ -1170,6 +1207,7 @@ footer strong { color: rgba(255,255,255,0.9); }
   Utah Division of Water Quality · Lower San Juan Watershed Plan
 </footer>
 
+<script src="practice-scores.js"></script>
 <script>
 const P = {
   EQIP:{name:'Environmental Quality Incentives Program (EQIP)',agency:'NRCS',cat:'federal-ag',award:'Up to 90% of costs for tribes (standard 75%)',match:'Up to 25%; tribes can receive 50% of funding upfront',best:'Farm, ranch, and grazing land improvements',criteria:'Must have control over the land. Tribal income limit waiver available for significant environmental/social benefits.',examples:['Solar pumps, pipelines, troughs','Cross-fencing','Brush management','Drip irrigation','Rotational grazing']},
@@ -1221,6 +1259,11 @@ const FINDER_MAP = {
   'road-drain':{best:['EPA319','WRI'],other:['PL566']},
   'riparian':{best:['EPA319','EWRP','AERP'],other:['WRI','Invasive']},
   'invasive':{best:['Invasive','EQIP'],other:['EWRP','Youth']},
+  'pj':{best:['WRI','EQIP'],other:['GIP','TCR','Invasive']},
+  'fuels':{best:['WRI','TCR'],other:['EQIP','CSP']},
+  'aspen':{best:['WRI','EQIP'],other:['EPA319','GIP']},
+  'mine-site':{best:['GAP','CWA106'],other:['EPA319','TCR']},
+  'stormwater':{best:['EPA319','CWISA'],other:['TCR','GAP']},
   'water-line':{best:['DWIGTSA','SUDS','TribalDomestic'],other:['WIFA','EWRP']},
   'arsenic-uranium':{best:['DWIGTSA','SUDS'],other:['TribalDomestic','GAP']},
   'septic':{best:['CWISA','SUDS'],other:['DWIGTSA']},
@@ -1262,10 +1305,15 @@ const CW_DATA = [
   {cat:'erosion',type:'Road / drainage improvements',best:['EPA319','WRI'],other:['PL566'],notes:'Clarify who owns the road (chapter, county, BIA). Pair road work with wash stabilization and riparian planting.'},
   {cat:'riparian',type:'Riparian restoration',best:['EPA319','EWRP','AERP'],other:['WRI','Invasive'],notes:'Combine invasive removal, planting, and grazing management. Link habitat, water quality, and cultural benefits together.'},
   {cat:'riparian',type:'Native vegetation planting',best:['EQIP','WRI'],other:['EPA319','RCPP'],notes:'Tie planting to grazing changes or erosion fixes so vegetation survives and funders see multiple benefits.'},
+  {cat:'riparian',type:'Pinyon-juniper management',best:['WRI','EQIP'],other:['GIP','TCR','Invasive'],notes:'Thin encroaching pinyon and juniper, seed the openings, and put the slash to work in nearby washes. Utah\'s Watershed Restoration Initiative funds most of this work in southeastern Utah; tie it to grazing plans and wash stabilization.'},
+  {cat:'riparian',type:'Fuels reduction or prescribed fire',best:['WRI','TCR'],other:['EQIP','CSP'],notes:'Show which streams, springs, and homes sit below the treatment area. Keep streamside buffers during the work. Forest Service and BIA wildland fire programs also fund fuels work but are not listed in this guide.'},
+  {cat:'riparian',type:'Aspen protection',best:['WRI','EQIP'],other:['EPA319','GIP'],notes:'Fence aspen stands and riparian shrubs against elk and livestock browsing. Pair with spring and headwater exclosures where they overlap.'},
   {cat:'riparian',type:'Invasive species removal',best:['Invasive','EQIP'],other:['EWRP','Youth'],notes:'Pair removal with replanting and youth engagement. Projects with partnerships score higher.'},
   {cat:'water',type:'Water line extensions',best:['DWIGTSA','SUDS','TribalDomestic'],other:['WIFA'],notes:'Map homes, existing lines, and hauling points. Emphasize health risks and the cost and difficulty of hauling water.'},
   {cat:'water',type:'Water treatment (arsenic / uranium)',best:['DWIGTSA','SUDS'],other:['TribalDomestic','GAP'],notes:'Protect people first — get strong water quality data and map affected homes before you choose between line extensions and point-of-use treatment.'},
   {cat:'water',type:'Septic system replacement',best:['CWISA','SUDS'],other:['DWIGTSA'],notes:'Document health risks and number of homes with failing systems. Show how fixing septic protects wells or nearby washes.'},
+  {cat:'water',type:'Legacy mine site cleanup (uranium and metals)',best:['GAP','CWA106'],other:['EPA319','TCR'],notes:'Most cleanup money comes from EPA\'s abandoned uranium mine program, the Navajo Nation AML/UMTRA Department, and Utah\'s Abandoned Mine Reclamation Program, which are not listed in this guide. Use the programs here for assessment, monitoring, community engagement, and runoff controls around sites.'},
+  {cat:'water',type:'Town or community stormwater',best:['EPA319','CWISA'],other:['TCR','GAP'],notes:'Start with a lot-scale demonstration at a chapter house, school, or town building: basins, swales, and cisterns that hold rain where it falls. Show how it keeps runoff and E. coli out of washes.'},
   {cat:'water',type:'Wastewater treatment plants',best:['CWISA'],other:['DWIGTSA'],notes:'Coordinate early with tribal utility and NNEPA. Expect a multi-year planning and construction timeline.'},
   {cat:'irrigation',type:'Canal / ditch lining',best:['WEEG'],other:['EQIP'],notes:'Document current water losses and the number of irrigators served. Highlight water savings and reliability.'},
   {cat:'irrigation',type:'Pump upgrades',best:['WEEG'],other:[],notes:'Emphasize reduced outages, energy savings, and improved reliability for homes or irrigators.'},
@@ -1402,6 +1450,7 @@ function runFinder() {
   }).join('');
   document.getElementById('finder-detail').style.display = 'none';
   document.getElementById('finder-results').classList.add('open');
+  renderFinderPractices();
 }
 
 function showFinderDetail(key) {
@@ -1463,12 +1512,75 @@ function filterCW(cat, btn) {
   if (openCW !== null) { document.getElementById('cwi-' + openCW).classList.remove('open'); openCW = null; }
 }
 
+
+/* ── PRACTICE SCORES (from practice-scores.js) ── */
+const PRACTICES = window.LSJ_PRACTICES || [];
+const selectedPractices = [];
+const pKey = p => p.id + (p.variant || '');
+const escH = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const FIT_CLASS = {'Strong fit':'strong','Good fit':'good','Fits some sites':'some'};
+const fitBadge = p => `<span class="pr-fit ${FIT_CLASS[p.fit] || 'some'}">${escH(p.fit || '')}</span>`;
+function pairsLine(p) {
+  if (!p.pairs_with) return '';
+  const byK = Object.fromEntries(PRACTICES.map(x => [pKey(x), x]));
+  const names = p.pairs_with.split('; ').map(k => byK[k]).filter(Boolean).map(x => escH(x.practice.split(':')[0]));
+  return names.length ? `<div class="pr-meta"><b>Works best with:</b> ${names.join('; ')}</div>` : '';
+}
+function practiceCard(p) {
+  const k = pKey(p), added = selectedPractices.includes(k);
+  return `<div class="pr-card${added ? ' added' : ''}">
+    <div class="pr-head">${fitBadge(p)}<div class="pr-name">${escH(p.practice)}</div></div>
+    ${p.traditional ? '<span class="pr-trad">Diné and traditional practice</span>' : ''}
+    ${pairsLine(p)}
+    ${p.watch ? `<div class="pr-meta"><b>Watch for:</b> ${escH(p.watch)}</div>` : ''}
+    ${p.priority_area ? `<div class="pr-meta"><b>${p.plan_priority ? 'Plan priority area:' : 'Where it fits:'}</b> ${escH(p.priority_area)}</div>` : ''}
+    <div class="pr-foot"><button type="button" class="pr-add" onclick="togglePractice('${k}')">${added ? '✓ On my worksheet' : '+ Add to my worksheet'}</button>
+    <details class="pr-more"><summary>Score details</summary><div>Overall ${p.tbl} of 100 · Water quality benefit ${p.environmental} · Cost and durability ${p.economic} · Local workability ${p.social} · Partners and track record ${p.leveraging}</div></details></div>
+  </div>`;
+}
+function renderFinderPractices() {
+  const box = document.getElementById('finder-practices'); if (!box) return;
+  const sel = document.getElementById('finder-type');
+  const label = sel.value ? sel.options[sel.selectedIndex].text : '';
+  const list = PRACTICES.filter(p => (p.funding_guide || '').split('; ').includes(label)).sort((a, b) => b.tbl - a.tbl);
+  if (!label || !PRACTICES.length) { box.innerHTML = ''; return; }
+  if (!list.length) {
+    box.innerHTML = `<div class="pr-panel"><h4>Practices for this project</h4><div class="pr-intro">Planning, monitoring, and staffing projects aren't scored, because they support practices rather than change conditions on the ground. You can still add practices on your worksheet (Step 7).</div></div>`;
+    return;
+  }
+  box.innerHTML = `<div class="pr-panel"><h4>Practices that fit this project</h4><div class="pr-intro">Best fits are listed first. Use this as a starting point for choosing practices; you don't need to score anything. Add the ones you're considering to your worksheet.</div><div class="pr-legend"><span><span class="pr-fit strong">Strong fit</span> works in most places here</span><span><span class="pr-fit good">Good fit</span> works with the right site or partner</span><span><span class="pr-fit some">Fits some sites</span> worth it where the specific problem exists</span></div>${list.map(practiceCard).join('')}<div class="pr-note">Draft ratings weigh water quality benefit, cost, local workability, and partner support, adapted from the Kentucky Triple Bottom Line method and the Lower San Juan Watershed Plan. Ratings compare practices, not sites; talk with agency staff about your location. For the details: <a href="practice-scores.html" target="_blank" rel="noopener">practice scoring page</a> · <a href="practice-ratings.csv" download>all ratings (CSV)</a></div></div>`;
+}
+function togglePractice(k) {
+  const i = selectedPractices.indexOf(k);
+  if (i >= 0) selectedPractices.splice(i, 1); else selectedPractices.push(k);
+  renderFinderPractices(); renderWSPractices();
+}
+function addPracticeFromPick() {
+  const sel = document.getElementById('ws-practice-pick');
+  if (sel.value && !selectedPractices.includes(sel.value)) { selectedPractices.push(sel.value); renderFinderPractices(); renderWSPractices(); }
+  sel.value = '';
+}
+function renderWSPractices() {
+  const box = document.getElementById('ws-practices'); if (!box) return;
+  const byKey = Object.fromEntries(PRACTICES.map(p => [pKey(p), p]));
+  const rows = selectedPractices.map(k => byKey[k]).filter(Boolean);
+  if (!rows.length) { box.innerHTML = '<div class="pr-empty">No practices added yet.</div>'; return; }
+  box.innerHTML = `<table class="pr-table"><thead><tr><th>Practice</th><th>Fit</th><th class="no-print"></th></tr></thead><tbody>${rows.map(p => `<tr><td><strong>${escH(p.practice)}</strong>${pairsLine(p)}${p.tracking_unit ? `<div class="pr-meta"><b>Track by:</b> ${escH(p.tracking_unit)}</div>` : ''}</td><td>${fitBadge(p)}</td><td class="no-print"><button type="button" class="pr-remove" onclick="togglePractice('${pKey(p)}')">Remove</button></td></tr>`).join('')}</tbody></table>`;
+}
+function buildPracticePick() {
+  const sel = document.getElementById('ws-practice-pick'); if (!sel || !PRACTICES.length) return;
+  const cats = [...new Set(PRACTICES.map(p => p.category))];
+  const names = {'Paired treatments':'Paired treatments (practices combined on one site)','Washes and channels':'Washes, channels, and riparian areas','Legacy mine sites':'Legacy mine sites (metals and radionuclides)','Irrigation and water efficiency':'Irrigation, farming, and water efficiency','Abajo forest and springs':'Abajo Mountains forest, headwaters, and springs'};
+  sel.innerHTML = '<option value="">— Pick a practice —</option>' + cats.map(c => `<optgroup label="${escH(names[c] || c)}">${PRACTICES.filter(p => p.category === c).map(p => `<option value="${pKey(p)}">${escH(p.practice)} — ${escH(p.fit)}</option>`).join('')}</optgroup>`).join('');
+}
+
 function clearWS() {
   document.querySelectorAll('#page-worksheet input[type=text], #page-worksheet textarea, #page-worksheet select').forEach(el => el.value = '');
   document.querySelectorAll('#page-worksheet input[type=checkbox]').forEach(el => el.checked = false);
+  selectedPractices.length = 0; renderFinderPractices(); renderWSPractices();
 }
 
-document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); });
+document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); buildPracticePick(); renderWSPractices(); });
 </script>
 
 <script>
