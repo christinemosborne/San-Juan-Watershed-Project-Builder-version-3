@@ -136,14 +136,32 @@ button.primary { background: var(--navy); color: var(--bg); border-color: var(--
 footer { margin-top: 32px; color: var(--muted); font-size: 0.85rem; }
 footer a { color: var(--teal); }
 .empty { padding: 24px; text-align: center; color: var(--muted); }
+@media print {
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]) {
+    --navy: #1f3a5a; --teal: #2a7f7a; --teal-soft: #d9ece9; --sand: #f4ede1; --sand-deep: #e6dac5;
+    --bg: #ffffff; --surface: #ffffff; --text: #1c2733; --muted: #5b6776; --line: #d9d2c3;
+    --bar-env: #2a7f7a; --bar-econ: #b07a2a; --bar-soc: #5a6fa8; --bar-lev: #7a5a8a;
+  }
+  @page { size: letter; margin: 0.55in 0.5in; }
+  body { background: #fff; font-size: 10pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap { max-width: none; padding: 0; }
+  .panel, .toolbar, .no-print, .detail { display: none !important; }
+  header h1 { font-size: 20pt; }
+  .draft { margin-top: 8px; }
+  .legend { margin-top: 12px; }
+  .group-h { break-after: avoid; page-break-after: avoid; margin-top: 18px; }
+  .table { border: 1px solid var(--line); }
+  .row { break-inside: avoid; page-break-inside: avoid; cursor: default; padding: 6px 10px; grid-template-columns: 44px minmax(0, 1fr) 120px 76px; } .fit { white-space: nowrap; }
+  .row:hover { background: none; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <h1>Lower San Juan Practice Scores</h1>
-    <p>Scores for conservation practices in the Lower San Juan Watershed, adapted from the Kentucky Water Research Institute's Triple Bottom Line method with a fourth dimension, Leveraging, from Utah's BMP Selector. Scores run 0–100; higher is better. Each practice also gets a plain fit rating: Strong fit (65 and up), Good fit (45–64), or Fits some sites (under 45). Practices in a plan priority area get a 5-point bonus. Select a practice to see or change its ratings.</p>
-    <div class="draft"><strong>Draft for review.</strong> Most ratings are professional judgment and have not been checked against local data. Changes you make here stay in this browser tab until you download them.</div>
+    <p>Scores for conservation practices in the Lower San Juan Watershed, adapted from the Kentucky Water Research Institute's Triple Bottom Line method with a fourth dimension, Leveraging, from Utah's BMP Selector. Scores run 0–100; higher is better. Each practice also gets a plain fit rating: Strong fit (65 and up), Good fit (45–64), or Fits some sites (under 45). Practices in a plan priority area get a 5-point bonus.<span class="no-print"> Select a practice to see or change its ratings.</span></p>
+    <div class="draft"><strong>Draft for review.</strong> Most ratings are professional judgment and have not been checked against local data.<span class="no-print"> Changes you make here stay in this browser tab until you download them.</span></div>
   </header>
 
   <section class="panel" aria-label="Filters and weights">
@@ -191,6 +209,7 @@ footer a { color: var(--teal); }
           <option value="id">ID</option>
         </select>
       </label>
+      <button id="print" type="button">Print or save as PDF</button>
       <button id="reset" type="button">Reset to draft</button>
       <button id="dlcsv" type="button">Download ratings CSV</button>
       <button id="dljson" type="button">Download scores JSON</button>
@@ -206,10 +225,6 @@ footer a { color: var(--teal); }
 
   <main id="results"></main>
 
-  <footer>
-    <p>Method: Environmental = weighted sum of ratings after any failure-risk discount, divided by the highest sum among all practices. Economic, Social, and Leveraging = weighted sum divided by the maximum possible. Within Environmental, criteria tied to the plan's four goals (sediment, salinity, E. coli, selenium, metals and radionuclides, flow, riparian habitat, bank and channel) count 1.5 times, human health counts 2 times, and nitrogen, phosphorus, and temperature count once. Overall = weighted average of the four dimensions (Environmental counts double by default, so water quality benefit leads), rescaled so the lowest practice scores 0 and the highest 100, plus a 5-point bonus (capped at 100) for practices the plan ties to a priority area. Fit: Strong 65 and up, Good 45–64, Fits some sites under 45. Ratings are per each practice's own unit, so scores compare practices, not projects. Sources: P = Lower San Juan 9-Element Watershed Plan BMP tables (Tables 4–7), K = Kentucky rating carried over, L = other literature, J = professional judgment. Plan priority areas and tracking units follow the plan. Paired treatments take each component's best environmental rating plus one point on the pair's main targets, average economic, social, and leveraging ratings, the hardest approval, and an averaged risk discount (planting risk cut to 10% when paired); they are recalculated from their components when the draft is built, but edits on this page do not carry through to packages.</p>
-    <p>Adapted from the <a href="https://kwri.uky.edu/tbl">Kentucky Triple Bottom Line Analysis of Conservation Practices</a> (Kentucky Water Research Institute, 2024). Utah Division of Water Quality · Lower San Juan Nine-element Watershed Plan.</p>
-  </footer>
 </div>
 
 <script>
@@ -437,6 +452,7 @@ function init() {
   wb.addEventListener("input", () => { bonus = Number(wb.value); document.getElementById("wBv").textContent = wb.value; render(); });
   ["q", "group", "fg", "pa", "sort"].forEach(id => document.getElementById(id).addEventListener("input", render));
 
+  document.getElementById("print").addEventListener("click", () => window.print());
   document.getElementById("reset").addEventListener("click", () => {
     data = structuredClone(DRAFT);
     Object.keys(weights).forEach(k => weights[k] = DEFAULT_W[k] ?? 1); bonus = BONUS_DEFAULT; document.getElementById("wB").value = String(BONUS_DEFAULT); document.getElementById("wBv").textContent = String(BONUS_DEFAULT);
