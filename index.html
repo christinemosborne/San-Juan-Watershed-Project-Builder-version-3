@@ -20,6 +20,8 @@
   --rust-light:#fdf0e8;
   --gold:#b07800;
   --gold-light:#fef5e0;
+  --orange:#c8641a;
+  --orange-light:#fff1e6;
   --green:#2a6e3f;
   --green-light:#e8f4ec;
   --white:#ffffff;
@@ -587,6 +589,14 @@ body {
 .finder-head p { font-size: 0.87rem; color: #9dc8de; }
 .finder-body { padding: 20px; }
 .finder-results { margin-top: 18px; display: none; }
+.flood-alert { background: var(--orange-light); border-left: 4px solid var(--orange); border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 0.9rem; color: var(--text); margin: 0 0 16px; }
+.flood-alert strong { color: var(--orange); }
+.flood-alert a { color: var(--orange); font-weight: 700; }
+.flood-steps { background: var(--orange-light); border: 1.5px solid var(--orange); border-radius: 6px; padding: 14px 16px; margin-bottom: 16px; }
+.flood-steps h4 { color: var(--orange); font-size: 1rem; margin: 0 0 8px; }
+.flood-steps ol { margin: 0; padding-left: 20px; }
+.flood-steps li { font-size: 0.9rem; margin-bottom: 6px; color: var(--text); }
+.flood-steps .fs-note { font-size: 0.8rem; color: var(--muted); margin-top: 8px; }
 .finder-results.open { display: block; }
 .finder-card {
   background: var(--sand);
@@ -1117,12 +1127,14 @@ footer strong { color: rgba(255,255,255,0.9); }
     <div class="section-label">Step 4 of 7</div>
     <div class="section-title">Find the Right Funding</div>
     <div class="section-desc">Pick your project type and your biggest barrier. We'll show you the programs that fit best — ranked by how well they match.</div>
+    <div class="flood-alert"><strong>Recovering from a flood?</strong> Pick <a href="#" onclick="document.getElementById('finder-type').value='flood-recovery';runFinder();return false;">Flood damage recovery (emergency)</a> for emergency programs and first steps. Some deadlines are only 60 days after the flood, so start right away.</div>
     <div class="finder-box">
       <div class="finder-head"><h3>💰 Funding Finder</h3><p>Two questions. Ranked results. Tap any result to see details.</p></div>
       <div class="finder-body">
-        <div class="field"><label>What is your project or problem?</label><select id="finder-type" onchange="runFinder()"><option value="">— Pick one —</option><option value="solar-well">Solar-powered livestock well or pump</option><option value="livestock-trough">Livestock watering trough</option><option value="cross-fence">Cross-fencing or rotational grazing</option><option value="range-plan">Rangeland assessment or plan</option><option value="erosion">Erosion control or stream stabilization</option><option value="check-dam">Check dams or sediment control</option><option value="road-drain">Road or drainage improvement</option><option value="riparian">Riparian restoration</option><option value="invasive">Invasive species removal</option><option value="pj">Pinyon-juniper management</option><option value="fuels">Fuels reduction or prescribed fire</option><option value="aspen">Aspen protection</option><option value="mine-site">Legacy mine site cleanup (uranium and metals)</option><option value="stormwater">Town or community stormwater</option><option value="water-line">Drinking water line extension</option><option value="arsenic-uranium">Water treatment (arsenic or uranium)</option><option value="septic">Septic system replacement</option><option value="wastewater-plant">Wastewater treatment plant</option><option value="canal-lining">Canal or ditch lining</option><option value="drip-irrigation">Drip irrigation</option><option value="water-monitoring">Water quality monitoring</option><option value="feasibility">Feasibility study or engineering report</option><option value="watershed-plan">Watershed plan</option><option value="climate-plan">Climate adaptation plan</option><option value="capacity">Hiring staff or a coordinator</option></select></div>
+        <div class="field"><label>What is your project or problem?</label><select id="finder-type" onchange="runFinder()"><option value="">— Pick one —</option><option value="flood-recovery">Flood damage recovery (emergency)</option><option value="solar-well">Solar-powered livestock well or pump</option><option value="livestock-trough">Livestock watering trough</option><option value="cross-fence">Cross-fencing or rotational grazing</option><option value="range-plan">Rangeland assessment or plan</option><option value="erosion">Erosion control or stream stabilization</option><option value="check-dam">Check dams or sediment control</option><option value="road-drain">Road or drainage improvement</option><option value="riparian">Riparian restoration</option><option value="invasive">Invasive species removal</option><option value="pj">Pinyon-juniper management</option><option value="fuels">Fuels reduction or prescribed fire</option><option value="aspen">Aspen protection</option><option value="mine-site">Legacy mine site cleanup (uranium and metals)</option><option value="stormwater">Town or community stormwater</option><option value="water-line">Drinking water line extension</option><option value="arsenic-uranium">Water treatment (arsenic or uranium)</option><option value="septic">Septic system replacement</option><option value="wastewater-plant">Wastewater treatment plant</option><option value="canal-lining">Canal or ditch lining</option><option value="drip-irrigation">Drip irrigation</option><option value="water-monitoring">Water quality monitoring</option><option value="feasibility">Feasibility study or engineering report</option><option value="watershed-plan">Watershed plan</option><option value="climate-plan">Climate adaptation plan</option><option value="capacity">Hiring staff or a coordinator</option></select></div>
         <div class="field"><label>What is your biggest barrier right now? <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><select id="finder-barrier" onchange="runFinder()"><option value="">— Optional —</option><option value="staff">We don't have enough staff time</option><option value="planning">We don't have a plan or study yet</option><option value="match">Match or cost-share is hard</option><option value="construction">We need construction money</option></select></div>
         <div class="finder-results" id="finder-results">
+          <div id="finder-emergency"></div>
           <div id="finder-practices"></div>
           <div style="font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:12px">Programs that fit your project:</div>
           <div id="finder-list"></div>
@@ -1160,6 +1172,7 @@ footer strong { color: rgba(255,255,255,0.9); }
       <button class="dir-filter-btn" onclick="filterDir('tribal-water',this)">Tribal Water</button>
       <button class="dir-filter-btn" onclick="filterDir('state',this)">State Programs</button>
       <button class="dir-filter-btn" onclick="filterDir('water-quality',this)">Water Quality (EPA)</button>
+      <button class="dir-filter-btn" onclick="filterDir('emergency',this)">Emergency and Flood Recovery</button>
     </div>
     <div id="dir-content"></div>
     <div class="btn-row"><button class="big-btn teal" onclick="goTo('crosswalk')">Next: Program Matcher →</button><button class="big-btn secondary" onclick="goTo('finder')">← Back</button></div>
@@ -1238,6 +1251,13 @@ const P = {
   DWIGTSA:{name:'Drinking Water Infrastructure Grant — Tribal Set-Aside (DWIG-TSA)',agency:'EPA',cat:'water-quality',award:'~$22.5M per year across 10 EPA Regions; extra funds for lead lines and PFAS',match:'None typically for tribal projects',best:'Improving public drinking water systems serving tribes',criteria:'Federally recognized tribes. Must be a Public Water System (PWS). Must demonstrate long-term capacity to maintain infrastructure.',examples:['Arsenic, uranium, and nitrate treatment systems','New or rehabilitated wells','Water storage tank construction','Lead service line replacement','Operator training and certification']},
   GAP:{name:'Indian Environmental General Assistance Program (GAP)',agency:'EPA',cat:'water-quality',award:'~$110,000–$184,000 per year',match:'None',best:'Building tribal environmental program capacity — staff, monitoring, and planning',criteria:'Federally recognized tribes. Must have or be developing an EPA-Tribal Environmental Plan (ETEP).',examples:['Water quality surveys','Tribal member workshops','Adaptation plans and vulnerability assessments','Staff capacity building']},
   SUDS:{name:'Small, Underserved and Disadvantaged Communities Grant (SU/DS)',agency:'EPA',cat:'water-quality',award:'$25M–$35M tribal allotment nationally',match:'Up to 45%; often fully waived for tribal communities',best:'Drinking water access for vulnerable and disadvantaged communities',criteria:'Federally recognized tribes (10% tribal set-aside). Must be underserved (lacks household water or violates MCLs) OR small (<10,000 people) and financially disadvantaged.',examples:['Water line extensions for homes on contaminated wells','Point-of-use filters while permanent fix is planned','Residential water testing','Quick-strike projects for water quality violations']},
+  EWP:{name:'Emergency Watershed Protection (EWP) — Recovery',agency:'NRCS',cat:'emergency',award:'Covers 75% of construction (up to 90% in limited-resource areas)',match:'25% (10% in limited-resource areas); check with NRCS whether in-kind labor and equipment can count',best:'Repairing flood damage in washes and channels that threatens homes, roads, or water systems',criteria:'A tribe, chapter, county, or town must sponsor the work. Contact NRCS right away: sponsor requests are usually due within 60 days of the flood. No federal disaster declaration is needed. Work must be finished within 220 days, with extensions possible.',examples:['Clearing debris jams from washes and culverts','Stabilizing eroded banks and headcuts that threaten roads or homes','Protecting exposed water lines and intakes','Floodplain easements or buyouts of repeatedly flooded properties']},
+  FEMATribal:{name:'FEMA Disaster Assistance — Tribal Declaration',agency:'FEMA',cat:'emergency',award:'Public Assistance covers at least 75% of repair costs; Individual Assistance helps households',match:'Can drop to 2% for tribes once federal obligations reach $200,000',best:'Repairing public roads, bridges, water systems, and buildings, and helping families, after a declared disaster',criteria:'The Navajo Nation and the Ute Mountain Ute Tribe can each ask the President directly for their own declaration instead of going through Utah. Requests are due within 60 days of the incident, and tribal public damage must total at least $100,000. A declaration also opens FEMA hazard mitigation grants for rebuilding stronger.',examples:['Rebuilding washed-out roads, culverts, and bridges','Repairing chapter houses, water systems, and lagoons','Debris removal and emergency protective measures','Hazard mitigation: raising, relocating, or flood-proofing facilities']},
+  ICDBGIT:{name:'ICDBG Imminent Threat Grants',agency:'HUD',cat:'emergency',award:'Up to $750,000; up to $1.5 million in a presidentially declared disaster',match:'None',best:'Urgent repairs to public facilities and housing, clearing unsafe structures, and relocation',criteria:'Federally recognized tribes and tribal organizations. The threat must be independently verified, unusual, and affect a whole community, and no other federal or tribal funds can be available. Reviewed first come, first served. Confirm the program is open for FY2027 with HUD\'s Southwest Office of Native American Programs.',examples:['Repairing flood-damaged homes and community buildings','Demolishing unsafe structures','Temporary or permanent relocation of families','Emergency public facility repairs']},
+  ERFO:{name:'Emergency Relief for Federally Owned Roads (ERFO) — Tribal Transportation',agency:'Federal Highway Administration and BIA',cat:'emergency',award:'Repair or rebuilding of damaged tribal transportation routes',match:'Confirm with the ERFO coordinator',best:'Navajo N-routes and other tribal roads and bridges damaged by the flood',criteria:'Roads on the tribal transportation inventory that are open to public travel and had serious damage from a widespread natural disaster. Work through the tribe\'s transportation department or BIA roads office, which files the Notice of Intent with the Federal Highway Administration\'s Federal Lands Highway office. File early.',examples:['Rebuilding washed-out road sections','Replacing collapsed culverts','Repairing undercut bridges and low-water crossings']},
+  IHSEmergency:{name:'IHS Sanitation Facilities — Emergency Projects',agency:'Indian Health Service',cat:'emergency',award:'Small emergency funds (about $1 million nationally each year for special and emergency projects), plus IHS staff and equipment',match:'None',best:'Restoring safe drinking water and wastewater service right after a disaster',criteria:'Tribal water and wastewater systems and homes. Call the IHS Navajo Area or Albuquerque Area (Ute Mountain Ute) Office of Environmental Health and Engineering. Longer-term rebuilds go through the Sanitation Deficiency System and the EPA set-asides (CWISA, DWIG-TSA).',examples:['Emergency repair of breached wastewater lagoons','Restoring flooded wells and water lines','Temporary water hauling or treatment']},
+  ECWAG:{name:'Emergency Community Water Assistance Grants (ECWAG)',agency:'USDA Rural Development',cat:'emergency',award:'Up to $150,000 for line repairs and extensions; up to $1,000,000 for new water sources or treatment',match:'None',best:'Communities whose drinking water was cut off or contaminated by the flood',criteria:'Tribes, public bodies, and nonprofits serving rural areas of 10,000 people or fewer with below-median income. No federal declaration is needed; the loss of water quantity or quality must have happened within the last two years. Accepted year-round through the Utah Rural Development office.',examples:['Replacing a flooded well house','Repairing broken water lines','Drilling a new well or adding treatment']},
+  ECP:{name:'Emergency Conservation Program (ECP)',agency:'USDA Farm Service Agency',cat:'emergency',award:'Up to 75% of costs; up to 90% for limited-resource, beginning, or socially disadvantaged producers; up to $500,000 per disaster',match:'10–25%',best:'Farmers and ranchers repairing flood damage on farm and range land',criteria:'Individual producers apply through the local FSA office during the sign-up FSA announces for the disaster. Photograph damage before cleanup. Problems that existed before the flood are not covered.',examples:['Removing flood debris from fields and pastures','Rebuilding fences','Repairing irrigation ditches, diversions, and terraces','Releveling irrigated fields and filling gullies']},
   CWA106:{name:'Tribal Clean Water Act Section 106 Grants',agency:'EPA',cat:'water-quality',award:'~$65,000–$900,000 per year',match:'None typically',best:'Tribal water quality monitoring programs and water quality standards',criteria:'Federally recognized tribes with Treatment as State (TAS) status. Must submit annual tribal assessment report.',examples:['River, lake, and groundwater sampling','Water quality specialist salaries','Tribal water quality standards development','Tribal assessment reports (TAR)']}
 };
 
@@ -1246,10 +1266,12 @@ const CATS = [
   {id:'drought',label:'Drought Resilience & Water Efficiency (Bureau of Reclamation)',keys:['WEEG','EWRP','SWEP','CWMP','AERP','TribalDomestic','TAP']},
   {id:'tribal-water',label:'Tribal Water Programs (BIA & Navajo Nation)',keys:['WMPPD','TPA','FarmGarden','AIFLivestock','TCR','Youth','Invasive']},
   {id:'state',label:'State Land and Water Agencies',keys:['WIFA','WRI','GIP']},
-  {id:'water-quality',label:'Tribal Water Quality & Pollution Control (EPA)',keys:['EPA319','CWISA','DWIGTSA','GAP','SUDS','CWA106']}
+  {id:'water-quality',label:'Tribal Water Quality & Pollution Control (EPA)',keys:['EPA319','CWISA','DWIGTSA','GAP','SUDS','CWA106']},
+  {id:'emergency',label:'Emergency and Flood Recovery',keys:['EWP','FEMATribal','ECWAG','ICDBGIT','ERFO','IHSEmergency','ECP']}
 ];
 
 const FINDER_MAP = {
+  'flood-recovery':{best:['EWP','FEMATribal','ECWAG'],other:['ICDBGIT','ERFO','IHSEmergency','ECP','CWISA','DWIGTSA']},
   'solar-well':{best:['EQIP','SWEP','GIP'],other:['AMA','AIFLivestock','WEEG']},
   'livestock-trough':{best:['EQIP','SWEP','GIP'],other:['AIFLivestock','AMA']},
   'cross-fence':{best:['EQIP','GIP'],other:['CSP','RCPP']},
@@ -1312,6 +1334,7 @@ const CW_DATA = [
   {cat:'water',type:'Water line extensions',best:['DWIGTSA','SUDS','TribalDomestic'],other:['WIFA'],notes:'Map homes, existing lines, and hauling points. Emphasize health risks and the cost and difficulty of hauling water.'},
   {cat:'water',type:'Water treatment (arsenic / uranium)',best:['DWIGTSA','SUDS'],other:['TribalDomestic','GAP'],notes:'Protect people first — get strong water quality data and map affected homes before you choose between line extensions and point-of-use treatment.'},
   {cat:'water',type:'Septic system replacement',best:['CWISA','SUDS'],other:['DWIGTSA'],notes:'Document health risks and number of homes with failing systems. Show how fixing septic protects wells or nearby washes.'},
+  {cat:'erosion',type:'Flood damage recovery (emergency)',best:['EWP','FEMATribal','ECWAG'],other:['ICDBGIT','ERFO','IHSEmergency','ECP'],notes:'Act fast: EWP sponsor requests and tribal FEMA declaration requests are usually due within 60 days of the flood. Photograph damage before cleanup, report it to your chapter or tribal emergency management office, and test drinking water wells. Rebuild with designs that hold up in flash floods.'},
   {cat:'water',type:'Legacy mine site cleanup (uranium and metals)',best:['GAP','CWA106'],other:['EPA319','TCR'],notes:'Most cleanup money comes from EPA\'s abandoned uranium mine program, the Navajo Nation AML/UMTRA Department, and Utah\'s Abandoned Mine Reclamation Program, which are not listed in this guide. Use the programs here for assessment, monitoring, community engagement, and runoff controls around sites.'},
   {cat:'water',type:'Town or community stormwater',best:['EPA319','CWISA'],other:['TCR','GAP'],notes:'Start with a lot-scale demonstration at a chapter house, school, or town building: basins, swales, and cisterns that hold rain where it falls. Show how it keeps runoff and E. coli out of washes.'},
   {cat:'water',type:'Wastewater treatment plants',best:['CWISA'],other:['DWIGTSA'],notes:'Coordinate early with tribal utility and NNEPA. Expect a multi-year planning and construction timeline.'},
@@ -1451,6 +1474,19 @@ function runFinder() {
   document.getElementById('finder-detail').style.display = 'none';
   document.getElementById('finder-results').classList.add('open');
   renderFinderPractices();
+  renderFloodSteps(type);
+}
+function renderFloodSteps(type) {
+  const box = document.getElementById('finder-emergency'); if (!box) return;
+  if (type !== 'flood-recovery') { box.innerHTML = ''; return; }
+  box.innerHTML = `<div class="flood-steps"><h4>First steps after a flood</h4><ol>
+    <li><strong>Photograph and record damage before cleanup.</strong> Take dated photos of washes, roads, wells, fences, and buildings. Most programs need proof of the damage.</li>
+    <li><strong>Report the damage.</strong> Tell your chapter and the Navajo Nation Department of Emergency Management, or the Ute Mountain Ute Tribe's emergency management office. In San Juan County, the county emergency manager reports to Utah Division of Emergency Management.</li>
+    <li><strong>Call NRCS about Emergency Watershed Protection now.</strong> A tribe, chapter, county, or town must sponsor, and requests are usually due within 60 days of the flood.</li>
+    <li><strong>Ask whether a tribal FEMA declaration is being pursued.</strong> Tribes can request their own declaration within 60 days of the incident; it opens the larger FEMA programs.</li>
+    <li><strong>Test drinking water.</strong> Floodwater can carry E. coli and other contaminants into wells, springs, and cisterns. Have wells tested before drinking, and use hauled water until results are back.</li>
+    <li><strong>Rebuild for the next flood.</strong> The practices below hold up better in flash floods; avoid designs that failed this time.</li>
+  </ol><div class="fs-note">Deadlines and amounts change after each disaster. Confirm them with each agency before you apply.</div></div>`;
 }
 
 function showFinderDetail(key) {
@@ -1604,4 +1640,4 @@ document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCro
 })();
 </script>
 </body>
-</html>
+</html>
