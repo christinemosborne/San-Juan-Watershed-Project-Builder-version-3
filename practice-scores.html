@@ -60,7 +60,8 @@ header p { margin: 0; color: var(--muted); max-width: 70ch; }
   background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
   padding: 16px; margin-top: 18px;
 }
-.controls { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; }
+.controls { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; gap: 12px; }
+@media (max-width: 1100px) { .controls { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 760px) { .controls { grid-template-columns: 1fr; } }
 label.field { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: var(--muted); font-weight: 600; }
 input[type="search"], select {
@@ -169,6 +170,9 @@ footer a { color: var(--teal); }
       <label class="field">Search practices
         <input type="search" id="q" placeholder="For example: spring, check dam, septic">
       </label>
+      <label class="field">Plan goal
+        <select id="goal"><option value="">All goals</option><option value="1">Goal 1: Sediment, salinity</option><option value="2">Goal 2: Bacteria</option><option value="3">Goal 3: Metals</option><option value="4">Goal 4: Hydrology</option></select>
+      </label>
       <label class="field">Group
         <select id="group"><option value="">All groups</option></select>
       </label>
@@ -233,6 +237,11 @@ const DRAFT = [{"id":"B-1","variant":"","category":"Paired treatments","practice
 const ENV = [["sed","Sediment"],["sal","Salinity"],["ecoli","E. coli"],["nutr","Nitrogen and phosphorus"],["sel","Selenium"],["met","Uranium, radionuclides, other metals"],["flow","Flow and water retention"],["temp","Temperature and dissolved oxygen"],["rip","Riparian habitat"],["bank","Bank and channel function"],["health","Human health (drinking water and contact exposure)"]];
 const DEFAULT_W = { sed: 1.5, sal: 1.5, ecoli: 1.5, sel: 1.5, met: 1.5, flow: 1.5, rip: 1.5, bank: 1.5, nutr: 1, temp: 1, health: 2 };
 const BONUS_DEFAULT = 5;
+/* Plan goals and the ratings that measure them. A practice is listed under a goal
+   when any of these ratings is 4 or 5 (a 40% or greater effect). */
+const GOAL_KEYS = { "1": ["sed", "sal"], "2": ["ecoli"], "3": ["sel", "met"], "4": ["flow", "rip", "bank"] };
+const GOAL_MIN = 4;
+const fitsGoal = (r, g) => !g || (GOAL_KEYS[g] || []).some(k => Number(r[k] || 0) >= GOAL_MIN);
 let bonus = BONUS_DEFAULT;
 const ECON = [["capital","Capital cost"],["maint","Annual maintenance"],["durability","Durability"],["water","Water use"]];
 const SOC = [["approvals","Approvals and jurisdictions"],["build","Local build capacity"],["upkeep","Upkeep burden"],["negative","Negative impacts"],["benefits","Added benefits"]];
@@ -373,8 +382,10 @@ function render() {
   const g = document.getElementById("group").value;
   const fg = document.getElementById("fg").value;
   const pa = document.getElementById("pa").value;
+  const goal = document.getElementById("goal").value;
   const sortBy = document.getElementById("sort").value;
   let shown = rows.filter(x =>
+    fitsGoal(x.r, goal) &&
     (!g || x.r.category === g) &&
     (!fg || (x.r.funding_guide || "").split("; ").includes(fg)) &&
     (!pa || (x.r.priority_area || "").toLowerCase().includes(pa.toLowerCase())) &&
@@ -385,7 +396,7 @@ function render() {
   const out = document.getElementById("results");
   out.replaceChildren();
   document.getElementById("count").textContent =
-    `${shown.length} of ${rows.length} practices. Overall scores are always relative to all ${rows.length}.`;
+    `${shown.length} of ${rows.length} practices${goal ? " rated 4 or 5 for Goal " + goal : ""}. Overall scores are always relative to all ${rows.length}.`;
   if (!shown.length) { out.append(el("div", { class: "empty", text: "No practices match those filters." })); return; }
   for (const grp of GROUP_ORDER) {
     const gs = shown.filter(x => x.r.category === grp).sort(cmp);
@@ -450,7 +461,16 @@ function init() {
   });
   const wb = document.getElementById("wB");
   wb.addEventListener("input", () => { bonus = Number(wb.value); document.getElementById("wBv").textContent = wb.value; render(); });
-  ["q", "group", "fg", "pa", "sort"].forEach(id => document.getElementById(id).addEventListener("input", render));
+  ["q", "goal", "group", "fg", "pa", "sort"].forEach(id => document.getElementById(id).addEventListener("input", render));
+  /* Links from the watershed plan site, e.g. practice-scores.html?goal=2 or ?pa=McElmo */
+  try {
+    const qs = new URLSearchParams(location.search);
+    [["goal", "goal"], ["pa", "pa"], ["fg", "fg"], ["group", "group"]].forEach(([p, id]) => {
+      const v = qs.get(p), sel = document.getElementById(id);
+      if (v && [...sel.options].some(o => o.value === v)) sel.value = v;
+    });
+    if (qs.get("q")) document.getElementById("q").value = qs.get("q");
+  } catch (e) {}
 
   document.getElementById("print").addEventListener("click", () => window.print());
   document.getElementById("reset").addEventListener("click", () => {

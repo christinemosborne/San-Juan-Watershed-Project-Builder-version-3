@@ -1616,7 +1616,19 @@ function clearWS() {
   selectedPractices.length = 0; renderFinderPractices(); renderWSPractices();
 }
 
-document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); buildPracticePick(); renderWSPractices(); });
+document.addEventListener('DOMContentLoaded', () => { buildDirectory(); buildCrosswalk(); buildPracticePick(); renderWSPractices(); openFromLink(); });
+
+/* Deep links from the watershed plan site, e.g. index.html?finder=septic
+   opens Find Funding with that project type already picked. */
+function openFromLink() {
+  let type = '';
+  try { type = new URLSearchParams(location.search).get('finder') || ''; } catch (e) { return; }
+  const sel = document.getElementById('finder-type');
+  if (!type || !sel || ![...sel.options].some(o => o.value === type)) return;
+  goTo('finder');
+  sel.value = type;
+  runFinder();
+}
 </script>
 
 <script>
